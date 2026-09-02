@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIA: Selective Image Analogy &middot; SIGGRAPH Asia 2026</title>
+
+<meta name="description" content="Selective Image Analogy (SIA): a single before/after demonstration pair encodes several edits, and the user picks at inference time which of them transfer to a new query image. SIGGRAPH Asia 2026.">
+<meta name="author" content="Amirhossein Alimohammadi, Kian Izadpanah, Bardiya Kariminia, Yiorgos Chrysanthou, Ali Mahdavi-Amiri">
+<meta name="keywords" content="image analogy, selective image analogy, image editing, diffusion models, LoRA, concept suppression, SIGGRAPH Asia 2026">
+<link rel="canonical" href="https://kianizadpanah.github.io/selective-image-analogy/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="SIA: Selective Image Analogy">
+<meta property="og:description" content="One before/after pair. You choose which of its edits carry over. SIGGRAPH Asia 2026.">
+<meta property="og:url" content="https://kianizadpanah.github.io/selective-image-analogy/">
+<meta property="og:image" content="https://kianizadpanah.github.io/selective-image-analogy/static/figures/teaser.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SIA: Selective Image Analogy">
+<meta name="twitter:description" content="One before/after pair. You choose which of its edits carry over. SIGGRAPH Asia 2026.">
+<meta name="twitter:image" content="https://kianizadpanah.github.io/selective-image-analogy/static/figures/teaser.png">
+
+<link rel="icon" href="static/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="static/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<a class="skip" href="#abstract">Skip to content</a>
+
+<!-- ============================== NAV ============================== -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <span class="brand-mark">SIA</span>
+      <span class="brand-sub">Selective Image Analogy</span>
+    </a>
+    <ul class="navlinks">
+      <li><a class="lnk" href="#abstract">Abstract</a></li>
+      <li><a class="lnk" href="#results">Try&nbsp;it</a></li>
+      <li><a class="lnk" href="#examples">Examples</a></li>
+      <li><a class="lnk" href="#method">Method</a></li>
+      <li><a class="lnk" href="#evaluation">Evaluation</a></li>
+      <li><a class="lnk" href="#cite">Cite</a></li>
+    </ul>
+    <button class="themebtn" id="themeBtn" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+      <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"/></svg>
+      <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 019.5 3.5a8.5 8.5 0 1011 11z"/></svg>
+    </button>
+  </div>
+  <div class="progress" id="progress"></div>
+</nav>
+
+<!-- ============================ MASTHEAD =========================== -->
+<header class="masthead" id="top">
+  <div class="wrap">
+    <div class="venue">SIGGRAPH Asia 2026</div>
+
+    <h1>SIA: <em>Selective Image Analogy</em></h1>
+    <p class="tagline">One before/after pair. You choose which of its edits carry over.</p>
+
+    <div class="authors">
+      <span class="author"><a href="https://alimohammadiamirhossein.github.io/" target="_blank" rel="noopener">Amirhossein Alimohammadi</a><sup>1<span class="eq">*</span></sup></span><span class="sep">,</span>
+      <span class="author"><a href="https://kianizadpanah.github.io" target="_blank" rel="noopener">Kian Izadpanah</a><sup>2,1<span class="eq">*</span></sup></span><span class="sep">,</span>
+      <span class="author"><a href="https://github.com/bardiya2254kariminia" target="_blank" rel="noopener">Bardiya Kariminia</a><sup>3</sup></span><span class="sep">,</span>
+      <span class="author"><a href="https://www.cs.ucy.ac.cy/~yiorgos/" target="_blank" rel="noopener">Yiorgos Chrysanthou</a><sup>2,4</sup></span><span class="sep">,</span>
+      <span class="author"><a href="https://arash-mham.github.io/" target="_blank" rel="noopener">Ali Mahdavi-Amiri</a><sup>1</sup></span>
+    </div>
+
+    <div class="affil">
+      <span><sup>1</sup>Simon Fraser University</span>
+      <span><sup>2</sup>University of Cyprus</span>
+      <span><sup>3</sup>Shahid Beheshti University</span>
+      <span><sup>4</sup>CYENS Centre of Excellence</span>
+    </div>
+    <p class="eqnote"><span class="eq">*</span> Both authors contributed equally to this research.</p>
+
+    <nav class="links" aria-label="Paper resources">
+      <a class="btn primary" href="static/pdfs/SIA_paper.pdf" target="_blank" rel="noopener">
+        <svg width="15" height="17" viewBox="0 0 16 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M9.5 1H3a1.5 1.5 0 00-1.5 1.5v13A1.5 1.5 0 003 17h10a1.5 1.5 0 001.5-1.5V6z"/><path d="M9.5 1v5h5"/></svg>
+        Paper
+      </a>
+      <!-- arXiv: uncomment and fill in the id once the preprint is live.
+      <a class="btn" href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" rel="noopener">
+        <svg width="16" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4h18v2H3zM3 11h18v2H3zM3 18h12v2H3z"/></svg>
+        arXiv
+      </a>
+      -->
+      <a class="btn" href="https://github.com/KianIzadpanah/selective-image-analogy" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.07-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a4.1 4.1 0 011-.14c.34 0 .68.05 1 .14 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A7.995 7.995 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Code
+      </a>
+      <a class="btn" href="#cite">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5H5.5A1.5 1.5 0 004 6.5V10a1.5 1.5 0 001.5 1.5H8V15c0 2-1.2 3.4-3 4"/><path d="M19 5h-2.5A1.5 1.5 0 0015 6.5V10a1.5 1.5 0 001.5 1.5H19V15c0 2-1.2 3.4-3 4"/></svg>
+        BibTeX
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================= TEASER ============================ -->
+<div class="figure-block">
+  <div class="wrap">
+    <figure class="fig">
+      <button class="fig-shell" type="button" data-zoom="static/figures/teaser.png"
+              data-caption="Fig. 1 &mdash; Teaser of SIA." aria-label="Enlarge the teaser figure">
+        <picture>
+          <source srcset="static/figures/teaser.webp" type="image/webp">
+          <img src="static/figures/teaser.png" width="2400" height="1570"
+               alt="Teaser: a demonstration pair adds an SIA logo, a happy expression and a Batu Caves background; SIA reproduces every subset of those three edits on a new query image.">
+        </picture>
+        <span class="zoomhint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="7"/><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"/></svg> Enlarge</span>
+      </button>
+      <figcaption>
+        <b>Teaser of SIA.</b>
+        A single reference pair (<em>A</em>, <em>A&prime;</em>) may contain multiple edits at once. In this example
+        the changes include adding a logo, changing the expression, and replacing the background. Given a new query
+        image <em>B</em>, SIA lets the user choose which edits to transfer. The same demonstration can produce
+        different outputs, ranging from single-edit results to combinations of selected edits, while leaving the
+        remaining edits out.
+      </figcaption>
+    </figure>
+  </div>
+</div>
+
+<!-- ============================ ABSTRACT =========================== -->
+<section class="band" id="abstract">
+  <div class="wrap">
+    <div class="eyebrow">Abstract</div>
+    <h2>A demonstration pair carries several edits. Take only the ones you want.</h2>
+    <div class="abs-grid">
+    <div class="prose">
+      <p>
+        Image analogy transfers a demonstrated transformation from a before/after pair (<em>A</em>,&nbsp;<em>A&prime;</em>)
+        to a new query image <em>B</em>. Existing methods assume all changes in (<em>A</em>,&nbsp;<em>A&prime;</em>)
+        should be fully transferred, limiting flexibility when users want only a subset of the demonstrated edits.
+        We introduce <b>Selective Image Analogy</b> (SIA), a new setting where a single demonstration pair encodes
+        multiple edits, and the user selects at inference time which edits to apply to <em>B</em>.
+      </p>
+      <p>
+        To support this, we curate a multi-edit analogy dataset with full-edit and partial-edit targets. We then train
+        a model that first learns to transfer the complete demonstrated transformation, and then gains selective
+        control through a mask-aligned suppression mechanism: a token-gated LoRA that restricts adapter updates to
+        suppressed edit tokens during denoising, paired with a concept suppression vector that weakens the selected
+        tokens in the text embeddings before denoising. Together, these components allow SIA to suppress unwanted
+        edits that remain visible in <em>A&prime;</em>, while preserving the user-selected ones, all without requiring
+        a new demonstration pair for each edit combination. We perform extensive quantitative and qualitative
+        evaluations along with user study to demonstrate the efficacy of our approach.
+      </p>
+    </div>
+
+    <aside class="glance">
+      <div class="col-label">At a glance</div>
+      <dl>
+        <dt>Setting</dt>
+        <dd>Selective image analogy &mdash; one multi-edit demonstration, a user-chosen subset.</dd>
+        <dt>Selection signal</dt>
+        <dd>A token-level suppression mask over the edit phrases in the analogy prompt.</dd>
+        <dt>Components</dt>
+        <dd>AnaLoRA &middot; ExLoRA &middot; Concept Suppression Vector</dd>
+        <dt>Backbone</dt>
+        <dd>FLUX.2-Klein, concat mode, 30 denoising steps.</dd>
+        <dt>Cost per subset</dt>
+        <dd>None &mdash; no new demonstration pair and no per-query optimisation.</dd>
+      </dl>
+    </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ RESULTS ============================ -->
+<section id="results">
+  <div class="wrap">
+    <div class="eyebrow">Results &middot; interactive</div>
+    <h2>Switch any edit off. Same pair, different output.</h2>
+    <p class="lede">Every edit starts kept. Click one to suppress it &mdash; the demonstration pair never changes,
+      only the result does. Every image below is a real SIA output, not a live model call.</p>
+
+    <div class="strip" id="strip" role="tablist" aria-label="Choose a demonstration"></div>
+
+    <div class="board" id="board">
+      <!-- inputs -->
+      <div class="board-in">
+        <div class="col-label">Demonstration pair</div>
+        <div class="pairstack">
+          <button class="frame" type="button" id="fA" data-zoom aria-label="Enlarge image A">
+            <span class="tag">A</span><img id="imgA" alt="Demonstration source image A" decoding="async">
+          </button>
+          <div class="pair-arrow" aria-hidden="true">
+            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 0v16M1 12.5l4.5 4.5L10 12.5"/></svg>
+          </div>
+          <button class="frame" type="button" id="fAp" data-zoom aria-label="Enlarge image A prime">
+            <span class="tag">A&prime;</span><img id="imgAp" alt="Demonstration edited image A prime" decoding="async">
+          </button>
+        </div>
+
+        <div class="col-label mt">Query image</div>
+        <div class="querystack">
+          <button class="frame" type="button" id="fB" data-zoom aria-label="Enlarge query image B">
+            <span class="tag">B</span><img id="imgB" alt="Query image B" decoding="async">
+          </button>
+          <div class="analogy">
+            <p class="formula" aria-hidden="true">A : A&prime;<br><span>::</span><br>B : B&prime;</p>
+            <p class="note">The pair on the left fixes what each edit looks like. The switches decide
+              which of them reach <em>B&prime;</em>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- controls -->
+      <div class="board-ctl">
+        <div class="col-label">Demonstrated edits</div>
+        <div class="editcard">
+          <h4 id="boardTitle">Edits</h4>
+          <div class="chiplist" id="chips"></div>
+          <p class="hintline" id="chipHint"></p>
+          <div class="boardfoot">
+            <button class="linkbtn" id="reset" type="button">Keep all edits</button>
+            <span class="counter" id="counter">&mdash;</span>
+          </div>
+        </div>
+        <div class="stepper">
+          <button class="tbtn sm" id="cPrev" type="button" aria-label="Previous rendered combination"><svg width="8" height="13" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1L1.5 7l6 6"/></svg></button>
+          <span class="steplabel">step through combinations</span>
+          <button class="tbtn sm" id="cNext" type="button" aria-label="Next rendered combination"><svg width="8" height="13" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1l6 6-6 6"/></svg></button>
+        </div>
+        <div class="legend centered">
+          <span class="k"><i></i>kept &mdash; transferred to <em>B</em></span>
+          <span class="d"><i></i>suppressed &mdash; blocked in <em>B&prime;</em></span>
+        </div>
+      </div>
+
+      <!-- output -->
+      <div class="board-out">
+        <div class="col-label">Result</div>
+        <button class="frame big" type="button" id="fOut" data-zoom aria-label="Enlarge the result">
+          <span class="tag accent">B&prime;</span>
+          <img id="imgOut" alt="SIA result for the selected edit subset" decoding="async">
+          <span class="spinner" id="outSpin" hidden></span>
+        </button>
+        <div class="outmeta">
+          <div class="taglist" id="tags"></div>
+          <p class="small" id="outNote"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ EXAMPLES =========================== -->
+<section class="band" id="examples">
+  <div class="wrap">
+    <div class="eyebrow">More examples</div>
+    <h2>Drag across the result to see what stayed behind.</h2>
+    <p class="lede">One suppression setting per example. The slider wipes between the untouched query image and the
+      result, so the kept edits appear and the suppressed ones never do.</p>
+
+    <div class="filters" id="filters"></div>
+
+    <div id="cinemaHost"></div>
+
+    <div class="transport">
+      <button class="tbtn" id="prev" type="button" aria-label="Previous example"><svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1L1.5 7l6 6"/></svg></button>
+      <button class="tbtn" id="next" type="button" aria-label="Next example"><svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1l6 6-6 6"/></svg></button>
+      <span class="tcount" id="tcount">&mdash;</span>
+      <div class="film" id="film"></div>
+    </div>
+
+    <div class="moretoggle">
+      <button id="showAll" type="button">Show all examples at once</button>
+    </div>
+    <div class="allgrid" id="allgrid" hidden></div>
+  </div>
+</section>
+
+<!-- ============================= METHOD =========================== -->
+<section id="method">
+  <div class="wrap">
+    <div class="eyebrow">Method</div>
+    <h2>One mask, applied at two aligned points.</h2>
+    <p class="lede">Before denoising the mask weakens the suppressed tokens in the text embedding; during denoising
+      it gates the adapter to those same tokens. The demonstration pair and the prompt stay untouched.</p>
+
+    <figure class="fig wide">
+      <button class="fig-shell" type="button" data-zoom="static/figures/architecture.png"
+              data-caption="Fig. 2 &mdash; Overview of our selective image analogy pipeline." aria-label="Enlarge the pipeline figure">
+        <picture>
+          <source srcset="static/figures/architecture.webp" type="image/webp">
+          <img src="static/figures/architecture.png" width="2600" height="1088" loading="lazy"
+               alt="Pipeline: A, A prime and B are encoded and concatenated with the analogy prompt; retained tokens route through AnaLoRA while suppressed tokens additionally route through ExLoRA, and the Concept Suppression Vector is estimated from contrastive prompt pairs.">
+        </picture>
+        <span class="zoomhint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="7"/><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"/></svg> Enlarge</span>
+      </button>
+      <figcaption>
+        <b>Overview of our selective image analogy pipeline.</b>
+        Given a demonstration pair (<em>A</em>, <em>A&prime;</em>) containing multiple edits and a query image
+        <em>B</em>, the model transfers only the user-selected edits to produce <em>B&prime;</em>. In this example,
+        green textual tokens indicate retained edits that should be applied to <em>B</em>, while red textual tokens
+        indicate suppressed edits that should not be transferred, even though they are present in <em>A&prime;</em>.
+        The visual analogy guides the overall edit transfer, while the colored textual tokens specify which edits are
+        retained or suppressed using selective token suppression and the Concept Suppression Vector (CSV).
+      </figcaption>
+    </figure>
+
+    <div class="cards">
+      <article class="card">
+        <div class="cardnum">01</div>
+        <h3>AnaLoRA &mdash; learn the whole analogy first</h3>
+        <p>A lightweight LoRA adapter on FLUX.2-Klein, trained in concat mode on the four-image tuple
+          (<em>A</em>, <em>A&prime;</em>, <em>B</em>, <em>B&prime;</em>). The latents of <em>A</em>, <em>A&prime;</em>
+          and <em>B</em> are packed as visual conditioning and paired with a structured analogy prompt that names
+          <em>all</em> demonstrated edits. After this stage the model reliably performs full transfer.</p>
+      </article>
+      <article class="card">
+        <div class="cardnum">02</div>
+        <h3>ExLoRA &mdash; gate the adapter to the masked tokens</h3>
+        <p>A token-gated LoRA whose low-rank residual is applied <em>only</em> at the text positions marked by the
+          suppression mask. Unmasked tokens pass through the ordinary text stream, so suppression stays local to the
+          edit phrase the user switched off &mdash; no new demonstration pair, no per-subset prompt, no
+          query-specific optimisation.</p>
+      </article>
+      <article class="card">
+        <div class="cardnum">03</div>
+        <h3>CSV &mdash; remove the residual signal in the prompt</h3>
+        <p>The prompt embeddings still describe every edit, suppressed ones included. For each edit we estimate a
+          direction in text-encoder space from 64 contrastive positive/negative prompt pairs, cache it, and subtract
+          that component from the suppressed edit&rsquo;s token embeddings before denoising. Retained edits and the
+          analogy instructions are left untouched.</p>
+      </article>
+    </div>
+
+    <div class="statband">
+      <div class="stat"><b>1,606</b><span>training samples</span></div>
+      <div class="stat"><b>238</b><span>edit settings</span></div>
+      <div class="stat"><b>239</b><span>test cases</span></div>
+      <div class="stat"><b>2&ndash;4</b><span>simultaneous edits</span></div>
+      <div class="stat"><b>rank 16</b><span>both adapters</span></div>
+      <div class="stat"><b>30</b><span>denoising steps</span></div>
+    </div>
+    <p class="statnote">Our Multi-Edit Analogy Dataset spans creature and non-creature subjects and covers object
+      additions, appearance changes, expression changes, pose changes, background replacements and style transfer.
+      Every sample is filtered with a vision&ndash;language model to verify that the desired edits are present and the
+      excluded ones are absent.</p>
+  </div>
+</section>
+
+<!-- =========================== EVALUATION ========================== -->
+<section class="band" id="evaluation">
+  <div class="wrap">
+    <div class="eyebrow">Evaluation</div>
+    <h2>Highest retained-edit accuracy, and the strongest suppression.</h2>
+    <p class="lede">Preservation alone is not enough for selective analogy: a method that barely changes the query
+      image scores well on preservation and badly on everything else. SIA leads on retained accuracy, recall and both
+      CLIP directional scores.</p>
+
+    <figure class="tablewrap">
+      <div class="tscroll">
+        <table class="tbl">
+          <caption class="visually-hidden">Quantitative comparison with visual analogy baselines</caption>
+          <thead>
+            <tr>
+              <th rowspan="2" class="l">Method</th>
+              <th colspan="3">Qwen3-VL-32B</th>
+              <th colspan="3">Gemma&nbsp;3</th>
+              <th colspan="2">CLIP</th>
+            </tr>
+            <tr>
+              <th>Ret. Acc. &uarr;</th><th>Pres. &uarr;</th><th>Recall &uarr;</th>
+              <th>Ret. Acc. &uarr;</th><th>Pres. &uarr;</th><th>Recall &uarr;</th>
+              <th>Dir. Image &uarr;</th><th>Dir. Ret. &uarr;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="l">RelationAdapter <span class="ref">[Gong et al. 2025]</span></td>
+              <td>6.74</td><td>9.93</td><td>0.782</td><td>8.09</td><td>9.48</td><td>0.941</td><td>0.386</td><td>0.144</td></tr>
+            <tr><td class="l">VisualCloze <span class="ref">[Li et al. 2025]</span></td>
+              <td>7.24</td><td>8.62</td><td>0.856</td><td>8.14</td><td>9.28</td><td>0.947</td><td>0.464</td><td>0.152</td></tr>
+            <tr><td class="l">Edit Transfer <span class="ref">[Chen et al. 2025]</span></td>
+              <td>2.31</td><td class="best">9.96</td><td>0.176</td><td>5.75</td><td class="best">9.58</td><td>0.623</td><td>0.102</td><td>0.023</td></tr>
+            <tr><td class="l">LoRWeB <span class="ref">[Manor et al. 2026]</span></td>
+              <td>6.59</td><td>9.83</td><td>0.736</td><td>8.12</td><td>9.51</td><td>0.926</td><td>0.402</td><td>0.155</td></tr>
+            <tr class="ours"><td class="l">SIA <span class="ref">(ours)</span></td>
+              <td class="best">8.01</td><td>9.75</td><td class="best">0.892</td><td class="best">8.65</td><td>9.57</td><td class="best">0.952</td><td class="best">0.543</td><td class="best">0.171</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption><b>Table 1.</b> Quantitative comparison with visual analogy baselines. VLM scores use
+        Qwen3-VL-32B-Instruct and Gemma&nbsp;3. <em>Ret. Acc.</em> measures retained-edit quality, <em>Pres.</em>
+        measures preservation of <em>B</em>, and <em>Recall</em> measures retained-edit recall. <em>CLIP-Dir Image</em>
+        is the image&ndash;image directional metric, while <em>CLIP-Dir Retained</em> measures alignment with the
+        retained edit direction.</figcaption>
+    </figure>
+
+    <figure class="tablewrap narrow">
+      <div class="tscroll">
+        <table class="tbl">
+          <caption class="visually-hidden">Ablation of the suppression components</caption>
+          <thead>
+            <tr>
+              <th class="l">ExLoRA</th><th class="l">CSV</th>
+              <th>Ret. Acc. &uarr;</th><th>Supp. &uarr;</th><th>Pres. &uarr;</th><th>Avg. &uarr;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="l no">No</td><td class="l no">No</td><td class="best">9.07</td><td>1.93</td><td>9.00</td><td>6.67</td></tr>
+            <tr><td class="l no">No</td><td class="l yes">Yes</td><td>8.81</td><td>4.93</td><td>9.16</td><td>7.63</td></tr>
+            <tr><td class="l yes">Yes</td><td class="l no">No</td><td>7.95</td><td>7.81</td><td class="best">9.77</td><td>8.51</td></tr>
+            <tr class="ours"><td class="l yes">Yes</td><td class="l yes">Yes</td><td>8.01</td><td class="best">7.85</td><td>9.75</td><td class="best">8.54</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption><b>Table 2.</b> Quantitative ablation of the suppression components on the test set.
+        <em>Supp.</em> measures the absence of suppressed edits in the output; AnaLoRA is active in all variants.
+        Without ExLoRA and CSV the model transfers almost the full transformation from <em>A&prime;</em>. CSV alone
+        weakens the suppressed edit&rsquo;s text signal but has no learned suppression pathway; ExLoRA alone leaves
+        residual semantic evidence in the prompt embeddings. Together they give the strongest suppression, at a small
+        cost in retained-edit fidelity.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================== CITE ============================= -->
+<section id="cite">
+  <div class="wrap">
+    <div class="eyebrow">Citation</div>
+    <h2>Use SIA in your research?</h2>
+    <div class="citegrid">
+    <div class="bibwrap">
+      <div class="bib">
+        <button id="copyBib" type="button">Copy</button>
+<pre id="bibtex">@inproceedings{alimohammadi2026sia,
+  title     = {SIA: Selective Image Analogy},
+  author    = {Alimohammadi, Amirhossein and Izadpanah, Kian and
+               Kariminia, Bardiya and Chrysanthou, Yiorgos and
+               Mahdavi-Amiri, Ali},
+  booktitle = {SIGGRAPH Asia 2026 Conference Papers},
+  year      = {2026},
+  publisher = {Association for Computing Machinery}
+}</pre>
+      </div>
+      <p class="small ack">Questions and requests are welcome &mdash; please open an issue on the
+        <a href="https://github.com/KianIzadpanah/selective-image-analogy" target="_blank" rel="noopener">GitHub repository</a>.</p>
+    </div>
+
+    <aside class="glance">
+      <div class="col-label">Resources</div>
+      <ul class="reslist">
+        <li><a href="static/pdfs/SIA_paper.pdf" target="_blank" rel="noopener">Paper &mdash; PDF, 19&nbsp;pages</a></li>
+        <li><a href="https://github.com/KianIzadpanah/selective-image-analogy" target="_blank" rel="noopener">Code and project page source</a></li>
+        <li><a href="static/figures/teaser.png" target="_blank" rel="noopener">Teaser figure &mdash; PNG</a></li>
+        <li><a href="static/figures/architecture.png" target="_blank" rel="noopener">Pipeline figure &mdash; PNG</a></li>
+      </ul>
+      <p class="small venueline">Presented at <b>SIGGRAPH&nbsp;Asia&nbsp;2026</b>.</p>
+    </aside>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footgrid">
+    <p>&copy; 2026 the authors. Simon Fraser University &middot; University of Cyprus &middot;
+      Shahid Beheshti University &middot; CYENS Centre of Excellence.</p>
+    <p>Page design adapted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>
+      project page, licensed <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
+  </div>
+</footer>
+
+<!-- ============================ LIGHTBOX =========================== -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lbClose" type="button" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <figure class="lb-fig">
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+</div>
+
+<script src="static/js/data.js"></script>
+<script src="static/js/app.js"></script>
+</body>
+</html>
