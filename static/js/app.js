@@ -319,64 +319,8 @@
   var cinema = (function () {
     if (!EXAMPLES.length) return { init: function () {} };
 
-    var filters = { subject: "all", type: "all", n: "all" };
     var view = [];
     var pos = 0;
-
-    function matches(ex) {
-      if (filters.subject !== "all" && ex.subject !== filters.subject) return false;
-      if (filters.n !== "all" && ex.edits.length !== parseInt(filters.n, 10)) return false;
-      if (filters.type !== "all") {
-        return ex.edits.some(function (e) { return !e.kept && e.type === filters.type; });
-      }
-      return true;
-    }
-
-    function buildFilters() {
-      var seenType = {}, seenSub = {}, seenN = {};
-      EXAMPLES.forEach(function (ex) {
-        seenSub[ex.subject] = true;
-        seenN[ex.edits.length] = true;
-        ex.edits.forEach(function (e) { if (!e.kept) seenType[e.type] = true; });
-      });
-      var groups = [
-        {
-          key: "subject", label: "Subject",
-          opts: [["all", "All"]].concat(Object.keys(SUBJECT_LABEL)
-            .filter(function (k) { return seenSub[k]; })
-            .map(function (k) { return [k, SUBJECT_LABEL[k]]; }))
-        },
-        {
-          key: "type", label: "Suppressed edit",
-          opts: [["all", "All"]].concat(Object.keys(TYPE_LABEL)
-            .filter(function (k) { return seenType[k]; })
-            .map(function (k) { return [k, TYPE_LABEL[k]]; }))
-        },
-        {
-          key: "n", label: "Edits",
-          opts: [["all", "All"]].concat(Object.keys(seenN).sort()
-            .map(function (k) { return [k, k]; }))
-        }
-      ];
-      $("#filters").innerHTML = groups.map(function (g) {
-        return '<div class="fgroup" data-key="' + g.key + '"><span>' + g.label + "</span>" +
-          g.opts.map(function (o) {
-            return '<button type="button" data-val="' + o[0] + '" aria-pressed="' +
-              (filters[g.key] === o[0]) + '">' + esc(o[1]) + "</button>";
-          }).join("") + "</div>";
-      }).join("");
-
-      $$("#filters .fgroup button").forEach(function (b) {
-        b.addEventListener("click", function () {
-          var g = b.closest(".fgroup");
-          filters[g.dataset.key] = b.dataset.val;
-          $$("button", g).forEach(function (x) {
-            x.setAttribute("aria-pressed", String(x === b));
-          });
-          refresh(0);
-        });
-      });
-    }
 
     function frame(tag, src, alt, cls, exAr, caption) {
       return '<button class="frame' + (cls ? " " + cls : "") + '" type="button" data-zoom' +
@@ -505,7 +449,7 @@
     function paint() {
       var host = $("#cinemaHost");
       if (!view.length) {
-        host.innerHTML = '<p class="empty">No example matches that combination of filters yet.</p>';
+        host.innerHTML = '<p class="empty">No examples to show.</p>';
         $("#tcount").textContent = "0 of 0";
         $("#film").innerHTML = "";
         $("#prev").disabled = $("#next").disabled = true;
@@ -525,7 +469,7 @@
     }
 
     function refresh(resetTo) {
-      view = EXAMPLES.filter(matches);
+      view = EXAMPLES.slice();
       pos = Math.min(resetTo || 0, Math.max(view.length - 1, 0));
       buildFilm();
       buildAllGrid();
@@ -533,7 +477,6 @@
     }
 
     function init() {
-      buildFilters();
       refresh(0);
 
       $("#prev").addEventListener("click", function () { if (pos > 0) { pos--; paint(); } });

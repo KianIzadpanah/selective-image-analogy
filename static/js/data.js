@@ -173,29 +173,35 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x3",
-    "title": "Logo and paint, doors closed",
-    "subject": "objects",
-    "w": 368,
+    "id": "x8",
+    "title": "Wig and alley, in color",
+    "subject": "people",
+    "w": 384,
     "h": 512,
-    "dir": "static/images/examples/x3",
+    "dir": "static/images/examples/x8",
     "edits": [
       {
         "id": "e1",
-        "label": "add a golden star logo to the hood",
+        "label": "add a blue scarf",
         "type": "object",
-        "kept": true
+        "kept": false
       },
       {
         "id": "e2",
-        "label": "change the car color to red",
+        "label": "add a short white hair wig",
         "type": "appearance",
         "kept": true
       },
       {
         "id": "e3",
-        "label": "open the car doors",
-        "type": "pose",
+        "label": "add an old cobblestone alley background",
+        "type": "background",
+        "kept": true
+      },
+      {
+        "id": "e4",
+        "label": "add black and white pencil style",
+        "type": "style",
         "kept": false
       }
     ]
@@ -295,35 +301,29 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x8",
-    "title": "Wig and alley, in color",
-    "subject": "people",
-    "w": 384,
+    "id": "x3",
+    "title": "Logo and paint, doors closed",
+    "subject": "objects",
+    "w": 368,
     "h": 512,
-    "dir": "static/images/examples/x8",
+    "dir": "static/images/examples/x3",
     "edits": [
       {
         "id": "e1",
-        "label": "add a blue scarf",
+        "label": "add a golden star logo to the hood",
         "type": "object",
-        "kept": false
+        "kept": true
       },
       {
         "id": "e2",
-        "label": "add a short white hair wig",
+        "label": "change the car color to red",
         "type": "appearance",
         "kept": true
       },
       {
         "id": "e3",
-        "label": "add an old cobblestone alley background",
-        "type": "background",
-        "kept": true
-      },
-      {
-        "id": "e4",
-        "label": "add black and white pencil style",
-        "type": "style",
+        "label": "open the car doors",
+        "type": "pose",
         "kept": false
       }
     ]
