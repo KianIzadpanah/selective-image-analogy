@@ -64,13 +64,14 @@ python -m http.server 8000
 
 ## Deployment
 
-Pushing to `main` publishes the site. `.github/workflows/pages.yml` uploads the
-repository root as-is (no Jekyll — see `.nojekyll`).
+Already live and wired up: **Settings → Pages → Source** is set to
+**GitHub Actions**, and `.github/workflows/pages.yml` runs on every push to
+`main`. Nothing to click — push and the site updates in about a minute.
 
-If the first run fails with *"Pages is not enabled"*, set
-**Settings → Pages → Source** to **GitHub Actions** once, then re-run the
-workflow. Deploying from a branch (`main` / `/root`) works just as well if you
-prefer to skip Actions entirely.
+The workflow deletes `new figures/` and `tools/` from the artifact before
+uploading, so the published site is ~9 MB rather than ~42 MB. Jekyll is off
+(`.nojekyll`), so paths starting with `_` and the `static/` tree are served
+verbatim.
 
 ## Two things to confirm before announcing
 
