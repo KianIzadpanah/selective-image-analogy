@@ -149,34 +149,6 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x2",
-    "title": "The carving, in full color",
-    "subject": "objects",
-    "w": 368,
-    "h": 512,
-    "dir": "static/images/examples/x2",
-    "edits": [
-      {
-        "id": "e1",
-        "label": "add carved Halloween texture",
-        "type": "appearance",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "spooky candlelit table, dark background",
-        "type": "background",
-        "kept": true
-      },
-      {
-        "id": "e3",
-        "label": "black and white pencil style",
-        "type": "style",
-        "kept": false
-      }
-    ]
-  },
-  {
     "id": "x8",
     "title": "Wig and alley, in color",
     "subject": "people",
@@ -211,23 +183,29 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x4",
-    "title": "Recolored, still standing",
-    "subject": "creatures",
+    "id": "x2",
+    "title": "The carving, in full color",
+    "subject": "objects",
     "w": 368,
     "h": 512,
-    "dir": "static/images/examples/x4",
+    "dir": "static/images/examples/x2",
     "edits": [
       {
         "id": "e1",
-        "label": "change the dog color to blue",
+        "label": "add carved Halloween texture",
         "type": "appearance",
         "kept": true
       },
       {
         "id": "e2",
-        "label": "sitting pose",
-        "type": "pose",
+        "label": "spooky candlelit table, dark background",
+        "type": "background",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "black and white pencil style",
+        "type": "style",
         "kept": false
       }
     ]
@@ -261,28 +239,6 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x6",
-    "title": "The jump, without the pencil",
-    "subject": "creatures",
-    "w": 368,
-    "h": 512,
-    "dir": "static/images/examples/x6",
-    "edits": [
-      {
-        "id": "e1",
-        "label": "jumping",
-        "type": "pose",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "add colored pencil style",
-        "type": "style",
-        "kept": false
-      }
-    ]
-  },
-  {
     "id": "x7",
     "title": "The beard, not the sunglasses",
     "subject": "people",
@@ -305,28 +261,22 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x3",
-    "title": "Logo and paint, doors closed",
-    "subject": "objects",
+    "id": "x4",
+    "title": "Recolored, still standing",
+    "subject": "creatures",
     "w": 368,
     "h": 512,
-    "dir": "static/images/examples/x3",
+    "dir": "static/images/examples/x4",
     "edits": [
       {
         "id": "e1",
-        "label": "add a golden star logo to the hood",
-        "type": "object",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "change the car color to red",
+        "label": "change the dog color to blue",
         "type": "appearance",
         "kept": true
       },
       {
-        "id": "e3",
-        "label": "open the car doors",
+        "id": "e2",
+        "label": "sitting pose",
         "type": "pose",
         "kept": false
       }
@@ -389,6 +339,34 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
+    "id": "x3",
+    "title": "Logo and paint, doors closed",
+    "subject": "objects",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x3",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a golden star logo to the hood",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "change the car color to red",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "open the car doors",
+        "type": "pose",
+        "kept": false
+      }
+    ]
+  },
+  {
     "id": "x11",
     "title": "Armor and hat, still at the beach",
     "subject": "people",
@@ -441,6 +419,28 @@ window.SIA_EXAMPLES = [
         "label": "rolling green hills background",
         "type": "background",
         "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x6",
+    "title": "The jump, without the pencil",
+    "subject": "creatures",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x6",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "jumping",
+        "type": "pose",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add colored pencil style",
+        "type": "style",
+        "kept": false
       }
     ]
   },

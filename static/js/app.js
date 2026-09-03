@@ -266,10 +266,6 @@
         probe.src = src;
       }
 
-      /* tags + note */
-      $("#tags").innerHTML = cur.edits.map(function (e, i) {
-        return '<span class="' + (mask[i] ? "tag-k" : "tag-d") + '">' + esc(e.label) + "</span>";
-      }).join("");
       $("#outNote").textContent = nKept === n
         ? "Full transfer — every demonstrated edit is applied."
         : nKept === 0

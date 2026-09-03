@@ -107,6 +107,7 @@ EXAMPLES = [
          edits=[("add a golden star logo to the hood", "object", 1),
                 ("change the car color to red", "appearance", 1),
                 ("open the car doors", "pose", 0)]),
+    # (x9 onwards follow; carousel order is set by EXAMPLE_ORDER below)
     dict(id="x9", src="some_is_correct/9", result="supp_e2.png", subject="people",
          title="Sunglasses, not the sad face",
          edits=[("add sunglasses", "object", 1),
@@ -157,6 +158,12 @@ EXAMPLES = [
 ]
 
 
+# Carousel order. The five non-human samples (x2, x3, x4, x6, x15) sit every
+# third slot so neither end of the strip is a long run of portraits.
+EXAMPLE_ORDER = ["x1", "x8", "x2", "x5", "x7", "x4", "x9", "x10", "x3",
+                 "x11", "x12", "x6", "x13", "x14", "x15", "x16", "x17"]
+
+
 # ---------------------------------------------------------------- build
 def mask_from_filename(fn, n):
     """`supp_e1_e3.png` with n=4 -> "0101" (1 = edit kept)."""
@@ -205,7 +212,12 @@ def main():
         print("%s: %s  %d/%d combinations  %s"
               % (s["id"], dim, len(available), 2 ** n, available))
 
-    for x in EXAMPLES:
+    by_id = {x["id"]: x for x in EXAMPLES}
+    assert set(by_id) == set(EXAMPLE_ORDER), (
+        "EXAMPLE_ORDER disagrees with EXAMPLES: %s"
+        % (set(by_id) ^ set(EXAMPLE_ORDER)))
+
+    for x in [by_id[i] for i in EXAMPLE_ORDER]:
         d = os.path.join(SRC, x["src"])
         dim = prep(os.path.join(d, "a.png")).size
         dest = os.path.join(IMG, "examples", x["id"])
