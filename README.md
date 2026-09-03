@@ -58,12 +58,21 @@ labels, titles, subject classes and edit types live in the `SAMPLES` /
 `EXAMPLES` tables at the top of `build_images.py` — that is the one place to
 change wording or add a new sample.
 
-## Type
+## Design system
 
-Same families the [TokenVerse](https://token-verse.github.io/) project page
-uses: Google Sans for display type, falling back to Noto Sans exactly as it
-does there, Noto Sans for text, and Castoro for the italic *A* / *A'* / *B* /
-*B'* image variables. Monospace labels use the system mono stack.
+Warm paper ground (`#F8F7F4`), deep-blue chrome (`#1E4F7F`), and the paper's
+own green/red for retained vs suppressed edits. Blue is reserved for interface
+furniture — links, eyebrows, focus rings — so it never competes with that
+semantic pair. Every colour is a token in `:root`, mirrored under
+`:root[data-theme="dark"]`.
+
+Type is Source Serif 4 for display, Noto Sans for text and JetBrains Mono for
+labels and code. Surfaces share three radii (6 / 10 / 14 px), a 1 px rule and
+two soft shadows.
+
+Figures and tables are framed, with the caption *inside* the frame under a
+hairline — so caption text is always exactly as wide as the thing it
+describes.
 
 ## Sizing
 

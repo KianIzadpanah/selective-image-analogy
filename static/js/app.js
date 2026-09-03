@@ -39,7 +39,7 @@
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       var meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute("content", next === "dark" ? "#0D0F13" : "#ffffff");
+      if (meta) meta.setAttribute("content", next === "dark" ? "#141513" : "#F8F7F4");
       try { localStorage.setItem(KEY, next); } catch (e) { /* ignore */ }
     });
   }());
@@ -47,6 +47,7 @@
   /* =================================================== nav / progress */
   (function chrome() {
     var bar = $("#progress");
+    var nav = $("#nav");
     var links = $$(".nav a.lnk");
     var ids = links.map(function (a) { return a.getAttribute("href").slice(1); });
     var targets = ids.map(function (id) { return document.getElementById(id); });
@@ -56,6 +57,7 @@
         var h = document.documentElement.scrollHeight - window.innerHeight;
         bar.style.width = (h > 0 ? Math.min(window.scrollY / h, 1) * 100 : 0) + "%";
       }
+      if (nav) nav.classList.toggle("scrolled", window.scrollY > 4);
       var mark = window.scrollY + window.innerHeight * 0.34;
       var best = -1;
       targets.forEach(function (el, i) {
