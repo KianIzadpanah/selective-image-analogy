@@ -21,7 +21,8 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
     });
   }
-  function ar(o) { return o.w + "/" + o.h; }
+  /* a bare number works for `aspect-ratio` and for calc(height * ar) */
+  function ar(o) { return (o.w / o.h).toFixed(4); }
 
   /* =========================================================== theme */
   (function theme() {
@@ -29,18 +30,16 @@
     var root = document.documentElement;
     var stored = null;
     try { stored = localStorage.getItem(KEY); } catch (e) { /* private mode */ }
-    if (stored === "dark" || stored === "light") {
-      root.setAttribute("data-theme", stored);
-    } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      root.setAttribute("data-theme", "dark");
-    } else {
-      root.setAttribute("data-theme", "light");
-    }
+    /* Light is the default; dark only when the reader asks for it. */
+    root.setAttribute("data-theme", stored === "dark" ? "dark" : "light");
+
     var btn = $("#themeBtn");
     if (!btn) return;
     btn.addEventListener("click", function () {
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute("content", next === "dark" ? "#0D0F13" : "#ffffff");
       try { localStorage.setItem(KEY, next); } catch (e) { /* ignore */ }
     });
   }());
@@ -370,14 +369,15 @@
             '<input type="range" class="wiperange" min="0" max="100" value="50" step="0.5" ' +
               'aria-label="Wipe between the query image and the result">' +
           "</div>" +
-          '<p class="wipehint">Drag the handle, or focus it and use the arrow keys</p>' +
+          '<p class="wipehint">Drag the handle to compare</p>' +
         "</div>" +
 
         '<div class="info">' +
           '<div class="col-label">This example</div>' +
           "<h3>" + esc(ex.title) + "</h3>" +
           '<div class="kindline"><b>' + SUBJECT_LABEL[ex.subject] + "</b> &middot; " +
-            ex.edits.length + " demonstrated edits &middot; suppressing " + uniq.join(", ") +
+            ex.edits.length + " demonstrated edits &middot; " +
+            (uniq.length ? "suppressing " + uniq.join(", ") : "full transfer") +
           "</div>" +
           '<div class="phrases">' + phrases + "</div>" +
           '<div class="legend"><span class="k"><i></i>kept</span>' +

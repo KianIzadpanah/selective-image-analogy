@@ -51,10 +51,10 @@ def thumb(im, dest, w=180):
 # ---------------------------------------------------------------- metadata
 SAMPLES = [
     dict(id="s1", src="all_is_correct/1", label="Alley portrait", subject="people",
-         title="Diadem, hair, street, brushwork",
+         title="Diadem, hair, lake, brushwork",
          edits=[("add a celestial diadem", "object"),
-                ("add blue hair", "appearance"),
-                ("add an empty Japanese festival street background", "background"),
+                ("add orange hair", "appearance"),
+                ("add a lake shore with reflections background", "background"),
                 ("add Van Gogh style", "style")]),
     dict(id="s2", src="all_is_correct/2", label="Dragon", subject="creatures",
          title="Lava, open wings, gold scales",
@@ -107,6 +107,53 @@ EXAMPLES = [
          edits=[("add a golden star logo to the hood", "object", 1),
                 ("change the car color to red", "appearance", 1),
                 ("open the car doors", "pose", 0)]),
+    dict(id="x9", src="some_is_correct/9", result="supp_e2.png", subject="people",
+         title="Sunglasses, not the sad face",
+         edits=[("add sunglasses", "object", 1),
+                ("add a sad expression", "expression", 0),
+                ("empty Japanese festival street background", "background", 1)]),
+    dict(id="x10", src="some_is_correct/10", result="supp_e3.png", subject="people",
+         title="Crown and necklace, calm face",
+         edits=[("add an open-top crown", "object", 1),
+                ("add a seamless gold necklace", "object", 1),
+                ("add an angry expression", "expression", 0)]),
+    dict(id="x11", src="some_is_correct/11", result="supp_e3.png", subject="people",
+         title="Armor and hat, still at the beach",
+         edits=[("add armor", "object", 1),
+                ("add a beach hat", "object", 1),
+                ("old cobblestone alley background", "background", 0)]),
+    dict(id="x12", src="some_is_correct/12", result="no_supp.png", subject="people",
+         title="All three edits, carried over",
+         edits=[("add drop earrings", "object", 1),
+                ("add a happy expression", "expression", 1),
+                ("rolling green hills background", "background", 1)]),
+    dict(id="x13", src="some_is_correct/13", result="supp_e3.png", subject="people",
+         title="Beard and surprise, same path",
+         edits=[("add a short beard", "object", 1),
+                ("add a surprised expression", "expression", 1),
+                ("lake shore with reflections background", "background", 0)]),
+    dict(id="x14", src="some_is_correct/14", result="supp_e2.png", subject="people",
+         title="Golden armor, no hat",
+         edits=[("add golden armor", "object", 1),
+                ("add a cowboy hat", "object", 0),
+                ("add a rolling green hills background", "background", 1)]),
+    dict(id="x15", src="some_is_correct/15", result="supp_e3.png", subject="creatures",
+         title="Red shirt and sit, no painting",
+         edits=[("add a red T-shirt", "object", 1),
+                ("sitting pose", "pose", 1),
+                ("add a minimalist painting style", "style", 0)]),
+    dict(id="x16", src="some_is_correct/16", result="supp_e2_e4.png", subject="people",
+         title="The scarf and the room, in color",
+         edits=[("add a scarf", "object", 1),
+                ("add a long blond hair wig", "appearance", 0),
+                ("add a store interior background", "background", 1),
+                ("add black and white pencil style", "style", 0)]),
+    dict(id="x17", src="some_is_correct/17", result="supp_e4.png", subject="people",
+         title="Crown, green hair and Paris, as a photo",
+         edits=[("add an open-top crown without jewellery", "object", 1),
+                ("add green hair", "appearance", 1),
+                ("add a Paris background", "background", 1),
+                ("add Van Gogh style", "style", 0)]),
 ]
 
 
@@ -170,8 +217,12 @@ def main():
         keep = "".join(str(k) for _, _, k in x["edits"])
         if x["result"].startswith("supp_"):
             expect = mask_from_filename(x["result"], len(x["edits"]))
-            assert expect == keep, ("%s: %s implies %s but metadata says %s"
-                                    % (x["id"], x["result"], expect, keep))
+        elif x["result"] == "no_supp.png":
+            expect = "1" * len(x["edits"])          # full transfer, nothing suppressed
+        else:
+            expect = keep                            # hand-named render, e.g. SIA.png
+        assert expect == keep, ("%s: %s implies %s but metadata says %s"
+                                % (x["id"], x["result"], expect, keep))
 
         out_examples.append(dict(
             id=x["id"], title=x["title"], subject=x["subject"],

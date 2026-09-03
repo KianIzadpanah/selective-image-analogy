@@ -23,9 +23,14 @@
 <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="static/favicon.svg">
 
+<meta name="theme-color" content="#ffffff">
+
+<!-- Same families the TokenVerse project page uses: Google Sans for display
+     (falling back to Noto Sans, as it does there), Noto Sans for text, and
+     Castoro for the italic A / A' / B / B' image variables. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300..700;1,300..600&family=Castoro:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
@@ -66,7 +71,7 @@
     <div class="authors">
       <span class="author"><a href="https://alimohammadiamirhossein.github.io/" target="_blank" rel="noopener">Amirhossein Alimohammadi</a><sup>1<span class="eq">*</span></sup></span><span class="sep">,</span>
       <span class="author"><a href="https://kianizadpanah.github.io" target="_blank" rel="noopener">Kian Izadpanah</a><sup>2,1<span class="eq">*</span></sup></span><span class="sep">,</span>
-      <span class="author"><a href="https://github.com/bardiya2254kariminia" target="_blank" rel="noopener">Bardiya Kariminia</a><sup>3</sup></span><span class="sep">,</span>
+      <span class="author"><a href="https://bardiya2254kariminia.github.io/" target="_blank" rel="noopener">Bardiya Kariminia</a><sup>3</sup></span><span class="sep">,</span>
       <span class="author"><a href="https://www.cs.ucy.ac.cy/~yiorgos/" target="_blank" rel="noopener">Yiorgos Chrysanthou</a><sup>2,4</sup></span><span class="sep">,</span>
       <span class="author"><a href="https://arash-mham.github.io/" target="_blank" rel="noopener">Ali Mahdavi-Amiri</a><sup>1</sup></span>
     </div>
@@ -105,7 +110,7 @@
 <!-- ============================= TEASER ============================ -->
 <div class="figure-block">
   <div class="wrap">
-    <figure class="fig">
+    <figure class="fig fig-teaser">
       <button class="fig-shell" type="button" data-zoom="static/figures/teaser.png"
               data-caption="Fig. 1 &mdash; Teaser of SIA." aria-label="Enlarge the teaser figure">
         <picture>
@@ -135,21 +140,16 @@
     <div class="abs-grid">
     <div class="prose">
       <p>
-        Image analogy transfers a demonstrated transformation from a before/after pair (<em>A</em>,&nbsp;<em>A&prime;</em>)
-        to a new query image <em>B</em>. Existing methods assume all changes in (<em>A</em>,&nbsp;<em>A&prime;</em>)
-        should be fully transferred, limiting flexibility when users want only a subset of the demonstrated edits.
-        We introduce <b>Selective Image Analogy</b> (SIA), a new setting where a single demonstration pair encodes
-        multiple edits, and the user selects at inference time which edits to apply to <em>B</em>.
+        Image analogy copies a change shown by a before/after pair (<em>A</em>,&nbsp;<em>A&prime;</em>) onto a new
+        image <em>B</em>. But one pair usually holds several edits at once, and existing methods transfer all of
+        them &mdash; you cannot ask for only some.
       </p>
       <p>
-        To support this, we curate a multi-edit analogy dataset with full-edit and partial-edit targets. We then train
-        a model that first learns to transfer the complete demonstrated transformation, and then gains selective
-        control through a mask-aligned suppression mechanism: a token-gated LoRA that restricts adapter updates to
-        suppressed edit tokens during denoising, paired with a concept suppression vector that weakens the selected
-        tokens in the text embeddings before denoising. Together, these components allow SIA to suppress unwanted
-        edits that remain visible in <em>A&prime;</em>, while preserving the user-selected ones, all without requiring
-        a new demonstration pair for each edit combination. We perform extensive quantitative and qualitative
-        evaluations along with user study to demonstrate the efficacy of our approach.
+        We introduce <b>Selective Image Analogy</b> (SIA): the pair stays fixed, and you choose which of its edits
+        to apply. SIA first learns to transfer the whole change, then gains control from a mask over the edit words.
+        The mask acts twice &mdash; it weakens the unwanted words in the text embedding, and gates a small adapter
+        to them while the image is generated. The unwanted edits are dropped and the chosen ones stay, even though
+        every edit is still visible in <em>A&prime;</em>, and no new pair is needed for each combination.
       </p>
     </div>
 
@@ -157,15 +157,13 @@
       <div class="col-label">At a glance</div>
       <dl>
         <dt>Setting</dt>
-        <dd>Selective image analogy &mdash; one multi-edit demonstration, a user-chosen subset.</dd>
+        <dd>One multi-edit demonstration, a user-chosen subset of its edits.</dd>
         <dt>Selection signal</dt>
-        <dd>A token-level suppression mask over the edit phrases in the analogy prompt.</dd>
+        <dd>A token-level mask over the edit phrases in the analogy prompt.</dd>
         <dt>Components</dt>
         <dd>AnaLoRA &middot; ExLoRA &middot; Concept Suppression Vector</dd>
         <dt>Backbone</dt>
         <dd>FLUX.2-Klein, concat mode, 30 denoising steps.</dd>
-        <dt>Cost per subset</dt>
-        <dd>None &mdash; no new demonstration pair and no per-query optimisation.</dd>
       </dl>
     </aside>
     </div>
@@ -177,8 +175,8 @@
   <div class="wrap">
     <div class="eyebrow">Results &middot; interactive</div>
     <h2>Switch any edit off. Same pair, different output.</h2>
-    <p class="lede">Every edit starts kept. Click one to suppress it &mdash; the demonstration pair never changes,
-      only the result does. Every image below is a real SIA output, not a live model call.</p>
+    <p class="lede">Every edit starts kept &mdash; click one to suppress it. The demonstration pair never
+      changes, only the result. Every image here is a real SIA output.</p>
 
     <div class="strip" id="strip" role="tablist" aria-label="Choose a demonstration"></div>
 
@@ -199,16 +197,11 @@
         </div>
 
         <div class="col-label mt">Query image</div>
-        <div class="querystack">
-          <button class="frame" type="button" id="fB" data-zoom aria-label="Enlarge query image B">
-            <span class="tag">B</span><img id="imgB" alt="Query image B" decoding="async">
-          </button>
-          <div class="analogy">
-            <p class="formula" aria-hidden="true">A : A&prime;<br><span>::</span><br>B : B&prime;</p>
-            <p class="note">The pair on the left fixes what each edit looks like. The switches decide
-              which of them reach <em>B&prime;</em>.</p>
-          </div>
-        </div>
+        <button class="frame" type="button" id="fB" data-zoom aria-label="Enlarge query image B">
+          <span class="tag">B</span><img id="imgB" alt="Query image B" decoding="async">
+        </button>
+        <p class="innote">The pair above fixes what each edit looks like. The switches decide which of
+          them reach <em>B&prime;</em>.</p>
       </div>
 
       <!-- controls -->
@@ -228,10 +221,6 @@
           <span class="steplabel">step through combinations</span>
           <button class="tbtn sm" id="cNext" type="button" aria-label="Next rendered combination"><svg width="8" height="13" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1l6 6-6 6"/></svg></button>
         </div>
-        <div class="legend centered">
-          <span class="k"><i></i>kept &mdash; transferred to <em>B</em></span>
-          <span class="d"><i></i>suppressed &mdash; blocked in <em>B&prime;</em></span>
-        </div>
       </div>
 
       <!-- output -->
@@ -245,6 +234,10 @@
         <div class="outmeta">
           <div class="taglist" id="tags"></div>
           <p class="small" id="outNote"></p>
+          <div class="legend">
+            <span class="k"><i></i>kept</span>
+            <span class="d"><i></i>suppressed</span>
+          </div>
         </div>
       </div>
     </div>
@@ -256,8 +249,8 @@
   <div class="wrap">
     <div class="eyebrow">More examples</div>
     <h2>Drag across the result to see what stayed behind.</h2>
-    <p class="lede">One suppression setting per example. The slider wipes between the untouched query image and the
-      result, so the kept edits appear and the suppressed ones never do.</p>
+    <p class="lede">One suppression setting per example. Drag the slider to wipe between the untouched
+      query image and the result.</p>
 
     <div id="cinemaHost"></div>
 
@@ -283,7 +276,7 @@
     <p class="lede">Before denoising the mask weakens the suppressed tokens in the text embedding; during denoising
       it gates the adapter to those same tokens. The demonstration pair and the prompt stay untouched.</p>
 
-    <figure class="fig wide">
+    <figure class="fig fig-arch">
       <button class="fig-shell" type="button" data-zoom="static/figures/architecture.png"
               data-caption="Fig. 2 &mdash; Overview of our selective image analogy pipeline." aria-label="Enlarge the pipeline figure">
         <picture>

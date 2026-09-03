@@ -3,7 +3,7 @@ window.SIA_SAMPLES = [
   {
     "id": "s1",
     "label": "Alley portrait",
-    "title": "Diadem, hair, street, brushwork",
+    "title": "Diadem, hair, lake, brushwork",
     "subject": "people",
     "w": 384,
     "h": 512,
@@ -16,12 +16,12 @@ window.SIA_SAMPLES = [
       },
       {
         "id": "e2",
-        "label": "add blue hair",
+        "label": "add orange hair",
         "type": "appearance"
       },
       {
         "id": "e3",
-        "label": "add an empty Japanese festival street background",
+        "label": "add a lake shore with reflections background",
         "type": "background"
       },
       {
@@ -41,7 +41,11 @@ window.SIA_SAMPLES = [
       "0110",
       "1001",
       "1010",
-      "1100"
+      "1100",
+      "0001",
+      "0010",
+      "0100",
+      "1000"
     ]
   },
   {
@@ -324,6 +328,270 @@ window.SIA_EXAMPLES = [
         "id": "e3",
         "label": "open the car doors",
         "type": "pose",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x9",
+    "title": "Sunglasses, not the sad face",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x9",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add sunglasses",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a sad expression",
+        "type": "expression",
+        "kept": false
+      },
+      {
+        "id": "e3",
+        "label": "empty Japanese festival street background",
+        "type": "background",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x10",
+    "title": "Crown and necklace, calm face",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x10",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add an open-top crown",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a seamless gold necklace",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add an angry expression",
+        "type": "expression",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x11",
+    "title": "Armor and hat, still at the beach",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x11",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add armor",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a beach hat",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "old cobblestone alley background",
+        "type": "background",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x12",
+    "title": "All three edits, carried over",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x12",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add drop earrings",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a happy expression",
+        "type": "expression",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "rolling green hills background",
+        "type": "background",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x13",
+    "title": "Beard and surprise, same path",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x13",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a short beard",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a surprised expression",
+        "type": "expression",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "lake shore with reflections background",
+        "type": "background",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x14",
+    "title": "Golden armor, no hat",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x14",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add golden armor",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a cowboy hat",
+        "type": "object",
+        "kept": false
+      },
+      {
+        "id": "e3",
+        "label": "add a rolling green hills background",
+        "type": "background",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x15",
+    "title": "Red shirt and sit, no painting",
+    "subject": "creatures",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x15",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a red T-shirt",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "sitting pose",
+        "type": "pose",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a minimalist painting style",
+        "type": "style",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x16",
+    "title": "The scarf and the room, in color",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x16",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a scarf",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a long blond hair wig",
+        "type": "appearance",
+        "kept": false
+      },
+      {
+        "id": "e3",
+        "label": "add a store interior background",
+        "type": "background",
+        "kept": true
+      },
+      {
+        "id": "e4",
+        "label": "add black and white pencil style",
+        "type": "style",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x17",
+    "title": "Crown, green hair and Paris, as a photo",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x17",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add an open-top crown without jewellery",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add green hair",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a Paris background",
+        "type": "background",
+        "kept": true
+      },
+      {
+        "id": "e4",
+        "label": "add Van Gogh style",
+        "type": "style",
         "kept": false
       }
     ]
