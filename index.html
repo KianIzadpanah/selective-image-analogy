@@ -180,61 +180,63 @@
     <div class="strip" id="strip" role="tablist" aria-label="Choose a demonstration"></div>
 
     <div class="board" id="board">
-      <!-- inputs -->
-      <div class="board-in">
-        <div class="col-label">Demonstration pair</div>
-        <div class="pairstack">
-          <button class="frame" type="button" id="fA" data-zoom aria-label="Enlarge image A">
-            <span class="tag">A</span><img id="imgA" alt="Demonstration source image A" decoding="async">
-          </button>
-          <div class="pair-arrow" aria-hidden="true">
-            <svg width="11" height="20" viewBox="0 0 11 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 0v16M1 12.5l4.5 4.5L10 12.5"/></svg>
-          </div>
-          <button class="frame" type="button" id="fAp" data-zoom aria-label="Enlarge image A prime">
-            <span class="tag">A&prime;</span><img id="imgAp" alt="Demonstration edited image A prime" decoding="async">
-          </button>
-        </div>
-
-        <div class="col-label mt">Query image</div>
-        <button class="frame" type="button" id="fB" data-zoom aria-label="Enlarge query image B">
-          <span class="tag">B</span><img id="imgB" alt="Query image B" decoding="async">
-        </button>
-        <p class="innote">The pair above fixes what each edit looks like. The switches decide which of
-          them reach <em>B&prime;</em>.</p>
-      </div>
-
-      <!-- controls -->
-      <div class="board-ctl">
-        <div class="col-label">Demonstrated edits</div>
-        <div class="editcard">
-          <h4 id="boardTitle">Edits</h4>
-          <div class="chiplist" id="chips"></div>
-          <p class="hintline" id="chipHint"></p>
-          <div class="boardfoot">
-            <button class="linkbtn" id="reset" type="button">Keep all edits</button>
-            <span class="counter" id="counter">&mdash;</span>
+      <!-- A -> A' :: B -> B', one row -->
+      <div class="boardrow">
+        <div class="bgroup">
+          <div class="col-label">Demonstration pair</div>
+          <div class="pairstack">
+            <button class="frame" type="button" id="fA" data-zoom aria-label="Enlarge image A">
+              <span class="tag">A</span><img id="imgA" alt="Demonstration source image A" decoding="async">
+            </button>
+            <div class="pair-arrow" aria-hidden="true">
+              <svg width="11" height="20" viewBox="0 0 11 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 0v16M1 12.5l4.5 4.5L10 12.5"/></svg>
+            </div>
+            <button class="frame" type="button" id="fAp" data-zoom aria-label="Enlarge image A prime">
+              <span class="tag">A&prime;</span><img id="imgAp" alt="Demonstration edited image A prime" decoding="async">
+            </button>
           </div>
         </div>
-        <div class="stepper">
-          <button class="tbtn sm" id="cPrev" type="button" aria-label="Previous rendered combination"><svg width="8" height="13" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1L1.5 7l6 6"/></svg></button>
-          <span class="steplabel">step through combinations</span>
-          <button class="tbtn sm" id="cNext" type="button" aria-label="Next rendered combination"><svg width="8" height="13" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1l6 6-6 6"/></svg></button>
-        </div>
-      </div>
 
-      <!-- output -->
-      <div class="board-out">
-        <div class="col-label">Result</div>
-        <button class="frame big" type="button" id="fOut" data-zoom aria-label="Enlarge the result">
-          <span class="tag accent">B&prime;</span>
-          <img id="imgOut" alt="SIA result for the selected edit subset" decoding="async">
-          <span class="spinner" id="outSpin" hidden></span>
-        </button>
-        <div class="outmeta">
+        <div class="rowsplit" aria-hidden="true"><span>applied to</span></div>
+
+        <div class="bgroup">
+          <div class="col-label">Query image</div>
+          <div class="pairstack">
+            <button class="frame" type="button" id="fB" data-zoom aria-label="Enlarge query image B">
+              <span class="tag">B</span><img id="imgB" alt="Query image B" decoding="async">
+            </button>
+            <div class="pair-arrow" aria-hidden="true">
+              <svg width="11" height="20" viewBox="0 0 11 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 0v16M1 12.5l4.5 4.5L10 12.5"/></svg>
+            </div>
+            <button class="frame big" type="button" id="fOut" data-zoom aria-label="Enlarge the result">
+              <span class="tag accent">B&prime;</span>
+              <img id="imgOut" alt="SIA result for the selected edit subset" decoding="async">
+              <span class="spinner" id="outSpin" hidden></span>
+            </button>
+          </div>
           <p class="small" id="outNote"></p>
+        </div>
+      </div>
+
+      <!-- switches -->
+      <div class="editcard">
+        <div class="edithead">
+          <h4 id="boardTitle">Edits</h4>
           <div class="legend">
             <span class="k"><i></i>kept</span>
             <span class="d"><i></i>suppressed</span>
+          </div>
+        </div>
+        <div class="chiplist" id="chips"></div>
+        <div class="boardfoot">
+          <p class="hintline" id="chipHint"></p>
+          <div class="footctl">
+            <button class="linkbtn" id="reset" type="button">Keep all edits</button>
+            <span class="counter" id="counter">&mdash;</span>
+            <span class="stepper">
+              <button class="tbtn sm" id="cPrev" type="button" aria-label="Previous rendered combination"><svg width="8" height="13" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1L1.5 7l6 6"/></svg></button>
+              <button class="tbtn sm" id="cNext" type="button" aria-label="Next rendered combination"><svg width="8" height="13" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1l6 6-6 6"/></svg></button>
+            </span>
           </div>
         </div>
       </div>
@@ -440,11 +442,6 @@
   <div class="wrap footgrid">
     <p>&copy; 2026 the authors. Simon Fraser University &middot; University of Cyprus &middot;
       Shahid Beheshti University &middot; CYENS Centre of Excellence.</p>
-    <p>Layout and typography take their cue from the
-      <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> and
-      <a href="https://deepmancer.github.io/HairPort/" target="_blank" rel="noopener">HairPort</a>
-      project pages. Released under
-      <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
   </div>
 </footer>
 

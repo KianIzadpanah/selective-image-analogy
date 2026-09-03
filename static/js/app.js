@@ -5,6 +5,13 @@
 (function () {
   "use strict";
 
+  /* A reload should land where the page starts, not where the browser last
+     left off. */
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (!location.hash) {
+    window.addEventListener("load", function () { window.scrollTo(0, 0); });
+  }
+
   var SAMPLES = window.SIA_SAMPLES || [];
   var EXAMPLES = window.SIA_EXAMPLES || [];
 
@@ -342,6 +349,7 @@
       return '<div class="cinema">' +
         '<div class="demo-col">' +
           '<div class="col-label">Demonstration</div>' +
+          '<div class="demo-row">' +
           frame("A", ex.dir + "/a.webp", "the demonstration source image A", "", a,
                 "A &mdash; the demonstration source image.") +
           '<div class="demo-arrow" aria-hidden="true"><svg width="11" height="20" viewBox="0 0 11 20" ' +
@@ -350,6 +358,7 @@
           frame("A&prime;", ex.dir + "/ap.webp",
                 "the demonstration with all " + ex.edits.length + " edits applied", "", a,
                 "A&prime; &mdash; all " + ex.edits.length + " demonstrated edits are present here.") +
+          "</div>" +
         "</div>" +
 
         "<div>" +
@@ -458,10 +467,13 @@
       $("#tcount").textContent = (pos + 1) + " of " + view.length;
       $("#prev").disabled = pos === 0;
       $("#next").disabled = pos === view.length - 1;
+      var strip = $("#film");
       $$("#film button").forEach(function (b, i) {
         b.setAttribute("aria-current", String(i === pos));
-        if (i === pos && b.scrollIntoView) {
-          b.scrollIntoView({ block: "nearest", inline: "nearest" });
+        if (i === pos && strip) {
+          /* keep the thumbnail in view without scrolling the document */
+          var want = b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2;
+          strip.scrollLeft = Math.max(0, want);
         }
       });
     }
