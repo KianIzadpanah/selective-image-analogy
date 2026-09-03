@@ -67,12 +67,24 @@ does there, Noto Sans for text, and Castoro for the italic *A* / *A'* / *B* /
 
 ## Sizing
 
-Every image block is driven by one custom property in `:root`
-(`--res-h`, `--pair-h`, `--wipe-h`, `--demo-h`, `--teaser-h`, `--arch-h`), each
-a `clamp(min, Nvh, max)`. Widths follow from the stored aspect ratio, so the
-interactive Results section lands inside a single screen on a 900px-tall
-window and shrinks with the viewport rather than forcing a scroll. Change one
-of those clamps to rescale a whole block.
+Every image block is driven by a custom property in `:root`, shaped as
+`clamp(floor, min(Nvh, Mvw), ceiling)`:
+
+* `min(Nvh, Mvw)` takes whichever viewport dimension is scarcer, so a portrait
+  tablet and a wide monitor both get a size that fits without a breakpoint.
+* the ceiling is the **native pixel height of the source render** (512 px for
+  the result crops, 1570 / 1088 for the two figure PDFs) — past it the browser
+  is only upscaling.
+* `--pair-h` and `--demo-h` are `calc()`ed from `--res-h` / `--wipe-h`, so the
+  columns beside them stay level at every screen size.
+
+Widths come from `calc(height * aspect-ratio)` with `max-width` clamping —
+never `width: min(100%, ...)`, which is a circular percentage inside an
+auto-sized grid track and silently collapses. `--wide` follows the viewport
+too (`min(94vw, 1480px)`), so figures keep growing on large displays.
+
+Below 760 px the layout is one column and these are pinned to the column width
+instead, since there the column and not the viewport height is the constraint.
 
 ## Local preview
 

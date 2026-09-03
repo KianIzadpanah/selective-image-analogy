@@ -29,18 +29,22 @@
   --serif:"Castoro",Georgia,"Times New Roman",serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 
-  --wide:1340px;
+  --wide:min(94vw,1480px);
   --prose:74ch;
   --nav-h:54px;
 
-  /* One knob per image block, so everything shrinks with the window instead
-     of forcing the page to scroll. */
-  --res-h:clamp(250px,51vh,520px);   /* B' in the interactive board */
-  --pair-h:clamp(135px,20vh,240px);  /* A / A' / B in the board       */
-  --wipe-h:clamp(255px,48vh,510px);  /* the wipe comparison           */
-  --demo-h:clamp(145px,23vh,265px);  /* A / A' beside the wipe        */
-  --teaser-h:clamp(265px,66vh,720px);
-  --arch-h:clamp(215px,52vh,580px);
+  /* Image blocks are sized from the viewport, never from a fixed number.
+     min() takes whichever of height or width is scarcer, so tall/narrow and
+     short/wide screens both get a size that fits. The upper bound is only
+     there because it is the native pixel height of the source render -- past
+     it the browser would simply upscale. The paired blocks are derived from
+     the main one so the columns stay level on every screen. */
+  --res-h:clamp(250px,min(58vh,46vw),640px);   /* B' in the board; 512px source */
+  --pair-h:calc((var(--res-h) - 104px) / 2);   /* A / A' / B beside it          */
+  --wipe-h:clamp(260px,min(54vh,42vw),620px);  /* wipe comparison; 512px source */
+  --demo-h:calc((var(--wipe-h) + 4px) / 2);    /* A / A' beside the wipe        */
+  --teaser-h:clamp(280px,min(74vh,54vw),1000px);  /* 1570px source */
+  --arch-h:clamp(230px,min(60vh,37vw),820px);     /* 1088px source */
   color-scheme:light;
 }
 
@@ -96,7 +100,7 @@ body{
 .prose p{font-size:18.5px;line-height:1.72;color:var(--ink)}
 .prose p b{font-weight:600}
 
-section{padding:clamp(32px,4.4vh,72px) 0}
+section{padding:clamp(28px,3.8vh,66px) 0}
 section.band{
   background:var(--band);
   border-top:1px solid var(--rule);
@@ -123,7 +127,7 @@ em{font-style:italic}
 a{color:var(--acc-ink);text-decoration-thickness:1px;text-underline-offset:3px}
 a:hover{text-decoration-thickness:2px}
 
-.lede{color:var(--muted);font-size:16.5px;margin:12px 0 clamp(14px,2vh,26px);max-width:132ch}
+.lede{color:var(--muted);font-size:16.5px;margin:10px 0 clamp(10px,1.6vh,22px);max-width:132ch}
 .small{font-size:15px;color:var(--muted)}
 .mono{font-family:var(--mono);font-size:12.5px;letter-spacing:-.01em}
 
@@ -144,7 +148,7 @@ a:hover{text-decoration-thickness:2px}
 .eyebrow{
   display:flex;align-items:center;gap:12px;
   font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:16px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:10px;
 }
 .eyebrow::before{content:"";width:28px;height:1px;background:var(--acc-ink);flex:0 0 auto}
 
@@ -341,7 +345,7 @@ figcaption b{
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ------------------------------------------------------------ sample strip */
-.strip{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .strip button{
   display:flex;align-items:center;gap:11px;
   padding:7px 16px 7px 7px;border-radius:999px;cursor:pointer;
@@ -364,7 +368,7 @@ figcaption b{
 
 /* ------------------------------------------------------------ switchboard */
 .board{
-  display:grid;grid-template-columns:auto minmax(226px,290px) minmax(0,1fr);
+  display:grid;grid-template-columns:auto minmax(212px,262px) minmax(0,1fr);
   gap:clamp(20px,2.4vw,34px);align-items:start;
   background:var(--raised);border:1px solid var(--rule);border-radius:16px;
   padding:clamp(18px,2vw,28px);box-shadow:var(--shadow-md);
@@ -375,7 +379,7 @@ figcaption b{
 .board-in .frame{width:calc(var(--pair-h) * var(--ar,.75));max-width:100%;flex:0 1 auto;min-width:0}
 .board-out{
   display:grid;grid-template-columns:auto minmax(0,1fr);
-  gap:clamp(14px,1.6vw,22px);align-items:start;
+  gap:clamp(12px,1.3vw,18px);align-items:start;
 }
 .board-out .col-label{grid-column:1/-1}
 .board-out .frame.big{width:calc(var(--res-h) * var(--ar,.75));max-width:100%}
@@ -441,9 +445,8 @@ figcaption b{
 /* ------------------------------------------------------------ cinema */
 .cinema{
   background:var(--raised);border:1px solid var(--rule);border-radius:16px;padding:clamp(18px,2vw,24px);
-  display:grid;grid-template-columns:auto minmax(0,1fr) minmax(250px,330px);
-  gap:clamp(18px,2.4vw,34px);align-items:start;
-  max-width:1010px;margin-inline:auto;
+  display:grid;grid-template-columns:auto auto minmax(250px,340px);
+  gap:clamp(18px,2.6vw,44px);align-items:start;justify-content:center;
   box-shadow:var(--shadow-md);
 }
 .demo-col .frame{width:calc(var(--demo-h) * var(--ar,.75));max-width:100%;margin-bottom:6px}
@@ -707,14 +710,7 @@ footer a{color:var(--muted)}
   .board-in .pairstack .frame{width:calc(50% - 8px)}
   .board-in > .frame{width:100%}
   .outmeta{max-width:none}
-  :root{
-    --res-h:clamp(300px,52vh,470px);
-    --pair-h:clamp(150px,25vh,225px);
-    --wipe-h:clamp(300px,50vh,450px);
-    --demo-h:clamp(140px,24vh,200px);
-    --teaser-h:clamp(220px,44vh,430px);
-    --arch-h:clamp(165px,32vh,330px);
-  }
+  .fig-teaser,.fig-arch{width:100%}
   body{font-size:16px}
   section{padding:68px 0}
   .wrap{padding:0 20px}
@@ -803,5 +799,5 @@ footer a{color:var(--muted)}
 /* ------------------------------------------------ query + analogy note */
 .innote{
   margin:12px 0 0;font-size:13px;line-height:1.5;color:var(--faint);
-  max-width:calc(var(--pair-h) * 2.1);
+  max-width:calc(var(--pair-h) * 1.55);
 }

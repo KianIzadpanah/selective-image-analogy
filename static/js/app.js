@@ -267,10 +267,10 @@
       }
 
       $("#outNote").textContent = nKept === n
-        ? "Full transfer — every demonstrated edit is applied."
+        ? "Full transfer: all " + n + " edits applied."
         : nKept === 0
-          ? "Every edit suppressed — the output stays close to B."
-          : nKept + " of " + n + " edits carried over from the same fixed demonstration pair.";
+          ? "All edits suppressed."
+          : nKept + " of " + n + " edits carried over.";
 
       /* counter */
       var idx = cur.available.indexOf(m);
