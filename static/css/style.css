@@ -672,7 +672,30 @@ figcaption b{
 .legend em{font-style:italic}
 
 /* ------------------------------------------------------------ transport */
-.transport{display:flex;align-items:center;gap:14px;margin-top:18px}
+.transport{
+  display:flex;justify-content:center;margin-top:clamp(14px,2vh,22px);
+}
+
+/* A deliberately narrow, framed rail: the thumbnails run past both ends, and
+   the edges fade out to say so. */
+.filmwrap{
+  position:relative;max-width:min(100%,730px);padding:8px 18px;
+  background:var(--surface);border:1px solid var(--rule);
+  border-radius:999px;box-shadow:var(--shadow-sm);
+}
+.filmwrap::before,.filmwrap::after{
+  content:"";position:absolute;top:8px;bottom:8px;width:46px;z-index:2;
+  pointer-events:none;opacity:1;transition:opacity .22s ease;
+}
+.filmwrap::before{
+  left:9px;border-radius:999px 0 0 999px;
+  background:linear-gradient(90deg,var(--surface) 30%,transparent);
+}
+.filmwrap::after{
+  right:9px;border-radius:0 999px 999px 0;
+  background:linear-gradient(270deg,var(--surface) 30%,transparent);
+}
+.filmwrap.at-start::before,.filmwrap.at-end::after{opacity:0}
 .tbtn{
   flex:0 0 auto;width:38px;height:38px;border-radius:50%;
   border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink);
@@ -683,18 +706,28 @@ figcaption b{
 .tbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent-dark)}
 .tbtn:disabled{opacity:.3;cursor:not-allowed}
 .tcount{font-family:var(--mono);font-size:13px;color:var(--faint);flex:0 0 auto}
-.film{display:flex;gap:8px;overflow-x:auto;padding:4px 2px;flex:1;scrollbar-width:thin}
+.film{
+  position:relative;display:flex;gap:7px;overflow-x:auto;
+  scroll-snap-type:x proximity;scroll-behavior:smooth;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.film::-webkit-scrollbar{display:none}
 .film button{
-  flex:0 0 auto;width:40px;padding:0;border-radius:var(--radius-sm);overflow:hidden;
+  flex:0 0 auto;width:46px;padding:0;border-radius:var(--radius-sm);overflow:hidden;
   cursor:pointer;border:1px solid var(--rule);background:var(--img-bg);
-  aspect-ratio:3/4;transition:border-color .16s;
+  aspect-ratio:3/4;scroll-snap-align:center;
+  transition:border-color .16s,transform .16s,box-shadow .16s;
 }
 .film button img{
-  display:block;width:100%;height:100%;object-fit:cover;opacity:.6;
+  display:block;width:100%;height:100%;object-fit:cover;opacity:.55;
   transition:opacity .16s;
 }
-.film button:hover img{opacity:.9}
-.film button[aria-current="true"]{border:2px solid var(--accent)}
+.film button:hover{transform:translateY(-2px)}
+.film button:hover img{opacity:.92}
+.film button[aria-current="true"]{
+  border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-tint);
+}
+.film button[aria-current="true"] img{opacity:1}
 .film button[aria-current="true"] img{opacity:1}
 
 /* --------------------------------------------------- all-examples grid */

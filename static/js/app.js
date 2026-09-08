@@ -425,6 +425,15 @@
       sync();
     }
 
+    /* the rail only fades on the side that still has thumbnails past it */
+    function fades() {
+      var s = $("#film"), wrap = $("#filmwrap");
+      if (!s || !wrap) return;
+      var max = s.scrollWidth - s.clientWidth;
+      wrap.classList.toggle("at-start", s.scrollLeft <= 1);
+      wrap.classList.toggle("at-end", max <= 1 || s.scrollLeft >= max - 1);
+    }
+
     function buildFilm() {
       $("#film").innerHTML = view.map(function (ex, i) {
         return '<button type="button" data-i="' + i + '" aria-current="' + (i === pos) + '" ' +
@@ -488,6 +497,7 @@
           strip.scrollLeft = Math.max(0, want);
         }
       });
+      fades();
     }
 
     function refresh(resetTo) {
@@ -500,6 +510,12 @@
 
     function init() {
       refresh(0);
+
+      var strip = $("#film");
+      if (strip) {
+        strip.addEventListener("scroll", fades, { passive: true });
+        window.addEventListener("resize", fades);
+      }
 
       $("#showAll").addEventListener("click", function () {
         var g = $("#allgrid");
