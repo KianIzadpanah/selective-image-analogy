@@ -154,7 +154,7 @@ img{max-width:100%;height:auto}
 .wrap{max-width:var(--wide);margin:0 auto;padding:0 clamp(20px,3.4vw,40px)}
 .prose{max-width:var(--prose);margin-top:26px}
 .prose p{
-  font-size:18.5px;line-height:1.74;color:var(--ink-soft);
+  font-size:20px;line-height:1.72;color:var(--ink-soft);
   margin:0 0 1.05em;
 }
 .prose p:last-child{margin-bottom:0}
@@ -735,17 +735,16 @@ figcaption b{
 
 /* --------------------------------------------------------- abstract grid */
 .abs-grid{
-  display:grid;grid-template-columns:minmax(0,var(--prose)) auto;
-  gap:clamp(34px,4.2vw,68px);align-items:start;margin-top:30px;
-  justify-content:start;
+  display:grid;grid-template-columns:minmax(0,86ch) minmax(290px,1fr);
+  gap:clamp(32px,3.4vw,56px);align-items:start;margin-top:30px;
 }
-.abs-grid .prose{margin-top:0}
+.abs-grid .prose{margin-top:0;max-width:none}
 
 .glance{
   border:1px solid var(--rule);border-radius:var(--radius-md);background:var(--surface);
   padding:20px 20px 22px;box-shadow:var(--shadow-sm);
   position:sticky;top:calc(var(--nav-h) + 24px);
-  width:min(100%,360px);
+  width:100%;
 }
 .glance dl{margin:0;display:flex;flex-direction:column;gap:14px}
 .glance dt{

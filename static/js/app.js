@@ -475,13 +475,10 @@
       if (!view.length) {
         host.innerHTML = '<p class="empty">No examples to show.</p>';
         $("#film").innerHTML = "";
-        $("#prev").disabled = $("#next").disabled = true;
         return;
       }
       host.innerHTML = cinemaHTML(view[pos]);
       wireWipe();
-      $("#prev").disabled = pos === 0;
-      $("#next").disabled = pos === view.length - 1;
       var strip = $("#film");
       $$("#film button").forEach(function (b, i) {
         b.setAttribute("aria-current", String(i === pos));
@@ -504,10 +501,6 @@
     function init() {
       refresh(0);
 
-      $("#prev").addEventListener("click", function () { if (pos > 0) { pos--; paint(); } });
-      $("#next").addEventListener("click", function () {
-        if (pos < view.length - 1) { pos++; paint(); }
-      });
       $("#showAll").addEventListener("click", function () {
         var g = $("#allgrid");
         g.hidden = !g.hidden;
