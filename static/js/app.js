@@ -298,11 +298,11 @@
           : nKept + " of " + n + " edits carried over.";
 
       /* counter */
-      var idx = cur.available.indexOf(m);
-      $("#counter").textContent = none
-        ? "query image"
-        : idx >= 0 ? "combination " + (idx + 1) + " / " + cur.available.length
-                   : "not rendered";
+      var all = cycle();
+      var idx = all.indexOf(m);
+      $("#counter").textContent = idx >= 0
+        ? "combination " + (idx + 1) + " / " + all.length
+        : "not rendered";
       $("#reset").disabled = !has(new Array(n).fill("1").join("")) || nKept === n;
     }
 

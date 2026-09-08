@@ -64,8 +64,8 @@
   /* board: A -> A' | B -> B', four frames on one row */
   --board-h:clamp(180px,min(46vh,calc((min(94vw,1480px) - 334px) / 3)),512px);
   /* carousel: A -> A' beside the wipe, with the caption column */
-  --wipe-h:clamp(240px,min(52vh,calc((min(94vw,1480px) - 590px) / 1.83)),560px);
-  --demo-h:calc(var(--wipe-h) * .72);
+  --wipe-h:clamp(230px,min(52vh,calc((min(94vw,1480px) - 546px) / 2.25)),520px);
+  --demo-h:var(--wipe-h);
   --teaser-h:clamp(280px,min(74vh,54vw),1000px);  /* 1570px source */
   --arch-h:clamp(230px,min(60vh,37vw),820px);     /* 1088px source */
 
@@ -371,6 +371,11 @@ a:hover{color:var(--accent);text-decoration-color:currentColor}
 .btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
 .btn svg{flex:0 0 auto}
+.btn.pending{
+  color:var(--faint);border-color:var(--rule);background:var(--surface);
+  cursor:default;box-shadow:none;
+}
+.btn.pending:hover{transform:none;border-color:var(--rule);color:var(--faint)}
 
 /* -------------------------------------------------------------- figures */
 .figure-block{padding:clamp(22px,3.4vh,44px) 0 clamp(34px,5vh,80px)}
@@ -580,8 +585,8 @@ figcaption b{
 
 /* -------------------------------------------------------------- cinema */
 .cinema{
-  display:grid;grid-template-columns:auto auto minmax(250px,340px);
-  gap:clamp(18px,2.6vw,44px);align-items:start;
+  display:grid;grid-template-columns:auto auto minmax(240px,310px);
+  gap:clamp(16px,1.9vw,32px);align-items:start;
   width:-moz-fit-content;width:fit-content;max-width:100%;margin-inline:auto;
   background:var(--surface);border:1px solid var(--rule);
   border-radius:var(--radius-lg);padding:clamp(18px,2vw,26px);
@@ -823,7 +828,7 @@ figcaption b{
 .tablewrap figcaption{font-size:14.5px}
 
 /* --------------------------------------------------------------- bibtex */
-.bibwrap{max-width:880px;margin-top:28px}
+.bibwrap{max-width:880px;margin:28px auto 0}
 .bib{
   position:relative;background:#14161A;color:#DFE3E9;border:1px solid #22252B;
   border-radius:var(--radius-md);padding:22px 24px;overflow-x:auto;
@@ -837,7 +842,7 @@ figcaption b{
   font-family:var(--sans);cursor:pointer;transition:background-color .16s;
 }
 .bib button:hover{background:rgba(255,255,255,.16)}
-.ack{margin-top:18px}
+.ack{margin-top:18px;text-align:center}
 
 /* --------------------------------------------------------------- footer */
 footer{

@@ -217,15 +217,17 @@ EXAMPLES = [
 
 
 # Carousel order. The seven non-human samples (x2, x3, x4, x6, x15, x24, x25)
-# take every fourth slot, so a run of portraits is never longer than three.
+# sit at the centre of each block of four - positions 2, 6, 10, 14, 18, 22, 26 -
+# so one shows up almost immediately, the strip does not end on one, and a run
+# of portraits is never longer than three.
 EXAMPLE_ORDER = [
-    "x1", "x8", "x5", "x2",
-    "x7", "x9", "x10", "x4",
-    "x11", "x12", "x13", "x6",
-    "x14", "x16", "x17", "x3",
-    "x18", "x19", "x20", "x15",
-    "x21", "x22", "x23", "x24",
-    "x26", "x27", "x28", "x25",
+    "x1", "x2", "x8", "x5",
+    "x7", "x4", "x9", "x10",
+    "x11", "x6", "x12", "x13",
+    "x14", "x3", "x16", "x17",
+    "x18", "x15", "x19", "x20",
+    "x21", "x24", "x22", "x23",
+    "x26", "x25", "x27", "x28",
 ]
 
 
