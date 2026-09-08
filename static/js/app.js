@@ -133,10 +133,17 @@
     var cur = SAMPLES[0];
     var mask = [];
     var warm = {};
+    var swapToken = 0;
 
     function maskStr(m) { return m.join(""); }
-    function has(m) { return cur.available.indexOf(m) >= 0; }
-    function outSrc(m) { return cur.dir + "/subsets/" + m + ".webp"; }
+    /* Nothing kept means nothing is transferred, so B itself is the answer --
+       reachable even though no subset was rendered for it. */
+    function isNone(m) { return m.indexOf("1") < 0; }
+    function has(m) { return isNone(m) || cur.available.indexOf(m) >= 0; }
+    function outSrc(m) { return isNone(m) ? cur.dir + "/b.webp"
+                                          : cur.dir + "/subsets/" + m + ".webp"; }
+    /* the stepper walks the rendered subsets and then the all-off state */
+    function cycle() { return cur.available.concat([new Array(cur.edits.length + 1).join("0")]); }
 
     /* Prefer full transfer; otherwise the rendered combination that keeps the most. */
     function defaultMask(s) {
@@ -202,7 +209,7 @@
     }
 
     function step(dir) {
-      var order = cur.available;
+      var order = cycle();
       var at = order.indexOf(maskStr(mask));
       var next = order[(at + dir + order.length) % order.length];
       mask = next.split("").map(Number);
@@ -260,16 +267,25 @@
       /* result */
       var out = $("#imgOut");
       var slot = $("#fOut");
+      var none = isNone(m);
       var src = outSrc(m);
-      slot.dataset.caption = "B&prime; &mdash; " + nKept + " of " + n +
-        " demonstrated edits transferred to B.";
+      $("#outTag").innerHTML = none ? "B" : "B&prime;";
+      slot.dataset.caption = none
+        ? "B &mdash; every edit is switched off, so nothing is transferred."
+        : "B&prime; &mdash; " + nKept + " of " + n + " demonstrated edits transferred to B.";
       slot.style.setProperty("--ar", ar(cur));
       if (out.getAttribute("src") !== src) {
+        /* Toggling quickly leaves several decodes in flight and they can settle
+           out of order, so only the newest one is allowed to paint. */
+        var token = ++swapToken;
         out.classList.add("fade", "hide");
         var probe = new Image();
         probe.onload = probe.onerror = function () {
+          if (token !== swapToken) return;
           out.src = src;
-          out.alt = "SIA result keeping " + nKept + " of " + n + " demonstrated edits";
+          out.alt = none
+            ? "The query image B, shown because every edit is switched off"
+            : "SIA result keeping " + nKept + " of " + n + " demonstrated edits";
           out.classList.remove("hide");
         };
         probe.src = src;
@@ -278,14 +294,15 @@
       $("#outNote").textContent = nKept === n
         ? "Full transfer: all " + n + " edits applied."
         : nKept === 0
-          ? "All edits suppressed."
+          ? "Every edit off — nothing is transferred, so B stands unchanged."
           : nKept + " of " + n + " edits carried over.";
 
       /* counter */
       var idx = cur.available.indexOf(m);
-      $("#counter").textContent = idx >= 0
-        ? "combination " + (idx + 1) + " / " + cur.available.length
-        : "not rendered";
+      $("#counter").textContent = none
+        ? "query image"
+        : idx >= 0 ? "combination " + (idx + 1) + " / " + cur.available.length
+                   : "not rendered";
       $("#reset").disabled = !has(new Array(n).fill("1").join("")) || nKept === n;
     }
 
@@ -457,14 +474,12 @@
       var host = $("#cinemaHost");
       if (!view.length) {
         host.innerHTML = '<p class="empty">No examples to show.</p>';
-        $("#tcount").textContent = "0 of 0";
         $("#film").innerHTML = "";
         $("#prev").disabled = $("#next").disabled = true;
         return;
       }
       host.innerHTML = cinemaHTML(view[pos]);
       wireWipe();
-      $("#tcount").textContent = (pos + 1) + " of " + view.length;
       $("#prev").disabled = pos === 0;
       $("#next").disabled = pos === view.length - 1;
       var strip = $("#film");

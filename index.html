@@ -209,7 +209,7 @@
               <svg width="11" height="20" viewBox="0 0 11 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 0v16M1 12.5l4.5 4.5L10 12.5"/></svg>
             </div>
             <button class="frame big" type="button" id="fOut" data-zoom aria-label="Enlarge the result">
-              <span class="tag accent">B&prime;</span>
+              <span class="tag accent" id="outTag">B&prime;</span>
               <img id="imgOut" alt="SIA result for the selected edit subset" decoding="async">
               <span class="spinner" id="outSpin" hidden></span>
             </button>
@@ -257,7 +257,6 @@
     <div class="transport">
       <button class="tbtn" id="prev" type="button" aria-label="Previous example"><svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 1L1.5 7l6 6"/></svg></button>
       <button class="tbtn" id="next" type="button" aria-label="Next example"><svg width="9" height="14" viewBox="0 0 9 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 1l6 6-6 6"/></svg></button>
-      <span class="tcount" id="tcount">&mdash;</span>
       <div class="film" id="film"></div>
     </div>
 
@@ -386,31 +385,6 @@
         retained edit direction.</figcaption>
     </figure>
 
-    <figure class="tablewrap narrow">
-      <div class="tscroll">
-        <table class="tbl">
-          <caption class="visually-hidden">Ablation of the suppression components</caption>
-          <thead>
-            <tr>
-              <th class="l">ExLoRA</th><th class="l">CSV</th>
-              <th>Ret. Acc. &uarr;</th><th>Supp. &uarr;</th><th>Pres. &uarr;</th><th>Avg. &uarr;</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td class="l no">No</td><td class="l no">No</td><td class="best">9.07</td><td>1.93</td><td>9.00</td><td>6.67</td></tr>
-            <tr><td class="l no">No</td><td class="l yes">Yes</td><td>8.81</td><td>4.93</td><td>9.16</td><td>7.63</td></tr>
-            <tr><td class="l yes">Yes</td><td class="l no">No</td><td>7.95</td><td>7.81</td><td class="best">9.77</td><td>8.51</td></tr>
-            <tr class="ours"><td class="l yes">Yes</td><td class="l yes">Yes</td><td>8.01</td><td class="best">7.85</td><td>9.75</td><td class="best">8.54</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <figcaption><b>Table 2.</b> Quantitative ablation of the suppression components on the test set.
-        <em>Supp.</em> measures the absence of suppressed edits in the output; AnaLoRA is active in all variants.
-        Without ExLoRA and CSV the model transfers almost the full transformation from <em>A&prime;</em>. CSV alone
-        weakens the suppressed edit&rsquo;s text signal but has no learned suppression pathway; ExLoRA alone leaves
-        residual semantic evidence in the prompt embeddings. Together they give the strongest suppression, at a small
-        cost in retained-edit fidelity.</figcaption>
-    </figure>
   </div>
 </section>
 

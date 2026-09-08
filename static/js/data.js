@@ -183,34 +183,6 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x2",
-    "title": "The carving, in full color",
-    "subject": "objects",
-    "w": 368,
-    "h": 512,
-    "dir": "static/images/examples/x2",
-    "edits": [
-      {
-        "id": "e1",
-        "label": "add carved Halloween texture",
-        "type": "appearance",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "spooky candlelit table, dark background",
-        "type": "background",
-        "kept": true
-      },
-      {
-        "id": "e3",
-        "label": "black and white pencil style",
-        "type": "style",
-        "kept": false
-      }
-    ]
-  },
-  {
     "id": "x5",
     "title": "Beard and street, same neutral face",
     "subject": "people",
@@ -239,6 +211,34 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
+    "id": "x2",
+    "title": "The carving, in full color",
+    "subject": "objects",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x2",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add carved Halloween texture",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "spooky candlelit table, dark background",
+        "type": "background",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "black and white pencil style",
+        "type": "style",
+        "kept": false
+      }
+    ]
+  },
+  {
     "id": "x7",
     "title": "The beard, not the sunglasses",
     "subject": "people",
@@ -256,28 +256,6 @@ window.SIA_EXAMPLES = [
         "id": "e2",
         "label": "add sunglasses",
         "type": "object",
-        "kept": false
-      }
-    ]
-  },
-  {
-    "id": "x4",
-    "title": "Recolored, still standing",
-    "subject": "creatures",
-    "w": 368,
-    "h": 512,
-    "dir": "static/images/examples/x4",
-    "edits": [
-      {
-        "id": "e1",
-        "label": "change the dog color to blue",
-        "type": "appearance",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "sitting pose",
-        "type": "pose",
         "kept": false
       }
     ]
@@ -339,28 +317,22 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x3",
-    "title": "Logo and paint, doors closed",
-    "subject": "objects",
+    "id": "x4",
+    "title": "Recolored, still standing",
+    "subject": "creatures",
     "w": 368,
     "h": 512,
-    "dir": "static/images/examples/x3",
+    "dir": "static/images/examples/x4",
     "edits": [
       {
         "id": "e1",
-        "label": "add a golden star logo to the hood",
-        "type": "object",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "change the car color to red",
+        "label": "change the dog color to blue",
         "type": "appearance",
         "kept": true
       },
       {
-        "id": "e3",
-        "label": "open the car doors",
+        "id": "e2",
+        "label": "sitting pose",
         "type": "pose",
         "kept": false
       }
@@ -423,28 +395,6 @@ window.SIA_EXAMPLES = [
     ]
   },
   {
-    "id": "x6",
-    "title": "The jump, without the pencil",
-    "subject": "creatures",
-    "w": 368,
-    "h": 512,
-    "dir": "static/images/examples/x6",
-    "edits": [
-      {
-        "id": "e1",
-        "label": "jumping",
-        "type": "pose",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "add colored pencil style",
-        "type": "style",
-        "kept": false
-      }
-    ]
-  },
-  {
     "id": "x13",
     "title": "Beard and surprise, same path",
     "subject": "people",
@@ -468,6 +418,28 @@ window.SIA_EXAMPLES = [
         "id": "e3",
         "label": "lake shore with reflections background",
         "type": "background",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x6",
+    "title": "The jump, without the pencil",
+    "subject": "creatures",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x6",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "jumping",
+        "type": "pose",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add colored pencil style",
+        "type": "style",
         "kept": false
       }
     ]
@@ -497,34 +469,6 @@ window.SIA_EXAMPLES = [
         "label": "add a rolling green hills background",
         "type": "background",
         "kept": true
-      }
-    ]
-  },
-  {
-    "id": "x15",
-    "title": "Red shirt and sit, no painting",
-    "subject": "creatures",
-    "w": 368,
-    "h": 512,
-    "dir": "static/images/examples/x15",
-    "edits": [
-      {
-        "id": "e1",
-        "label": "add a red T-shirt",
-        "type": "object",
-        "kept": true
-      },
-      {
-        "id": "e2",
-        "label": "sitting pose",
-        "type": "pose",
-        "kept": true
-      },
-      {
-        "id": "e3",
-        "label": "add a minimalist painting style",
-        "type": "style",
-        "kept": false
       }
     ]
   },
@@ -593,6 +537,388 @@ window.SIA_EXAMPLES = [
         "label": "add Van Gogh style",
         "type": "style",
         "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x3",
+    "title": "Logo and paint, doors closed",
+    "subject": "objects",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x3",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a golden star logo to the hood",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "change the car color to red",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "open the car doors",
+        "type": "pose",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x18",
+    "title": "Armor and the stage, no hat",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x18",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add armor",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a beach hat",
+        "type": "object",
+        "kept": false
+      },
+      {
+        "id": "e3",
+        "label": "add an indoor music festival stage background",
+        "type": "background",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x19",
+    "title": "Armor, hat and alley, all three",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x19",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add armor",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a beach hat",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add an old cobblestone alley background",
+        "type": "background",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x20",
+    "title": "Earrings and a smile, still indoors",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x20",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add cluster earrings",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a happy expression",
+        "type": "expression",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a peaceful countryside road background",
+        "type": "background",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x15",
+    "title": "Red shirt and sit, no painting",
+    "subject": "creatures",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x15",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a red T-shirt",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "sitting pose",
+        "type": "pose",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a minimalist painting style",
+        "type": "style",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x21",
+    "title": "The smile and the beach, no earrings",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x21",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add huggie earrings",
+        "type": "object",
+        "kept": false
+      },
+      {
+        "id": "e2",
+        "label": "add a happy expression",
+        "type": "expression",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a sandy beach with ocean waves background",
+        "type": "background",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x22",
+    "title": "Beard, surprise and the lake",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x22",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a short beard",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a surprised expression",
+        "type": "expression",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a lake shore with reflections background",
+        "type": "background",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x23",
+    "title": "Sweater and santa hat, same market",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x23",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a sweater",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "add a santa hat",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a street background",
+        "type": "background",
+        "kept": false
+      }
+    ]
+  },
+  {
+    "id": "x24",
+    "title": "Red lamp in oils, no bench",
+    "subject": "objects",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x24",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a park metal bench",
+        "type": "object",
+        "kept": false
+      },
+      {
+        "id": "e2",
+        "label": "turn the lamp light red",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add oil painting style",
+        "type": "style",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x26",
+    "title": "Wig, store and pencil, no scarf",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x26",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a scarf",
+        "type": "object",
+        "kept": false
+      },
+      {
+        "id": "e2",
+        "label": "add a long blond hair wig",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a store interior background",
+        "type": "background",
+        "kept": true
+      },
+      {
+        "id": "e4",
+        "label": "add black and white pencil style",
+        "type": "style",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x27",
+    "title": "White wig in pencil, no scarf",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x27",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a blue scarf",
+        "type": "object",
+        "kept": false
+      },
+      {
+        "id": "e2",
+        "label": "add a short white hair wig",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add an old cobblestone alley background",
+        "type": "background",
+        "kept": true
+      },
+      {
+        "id": "e4",
+        "label": "add black and white pencil style",
+        "type": "style",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x28",
+    "title": "Green hair in Van Gogh, same field",
+    "subject": "people",
+    "w": 384,
+    "h": 512,
+    "dir": "static/images/examples/x28",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add an open-top crown without jewellery",
+        "type": "object",
+        "kept": false
+      },
+      {
+        "id": "e2",
+        "label": "add green hair",
+        "type": "appearance",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a Paris background",
+        "type": "background",
+        "kept": false
+      },
+      {
+        "id": "e4",
+        "label": "add Van Gogh style",
+        "type": "style",
+        "kept": true
+      }
+    ]
+  },
+  {
+    "id": "x25",
+    "title": "Red shirt, sit and paint",
+    "subject": "creatures",
+    "w": 368,
+    "h": 512,
+    "dir": "static/images/examples/x25",
+    "edits": [
+      {
+        "id": "e1",
+        "label": "add a red T-shirt",
+        "type": "object",
+        "kept": true
+      },
+      {
+        "id": "e2",
+        "label": "sitting pose",
+        "type": "pose",
+        "kept": true
+      },
+      {
+        "id": "e3",
+        "label": "add a minimalist painting style",
+        "type": "style",
+        "kept": true
       }
     ]
   }
