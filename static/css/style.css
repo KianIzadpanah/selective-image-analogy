@@ -324,14 +324,9 @@ a:hover{color:var(--accent);text-decoration-color:currentColor}
 }
 .masthead h1 em{font-style:italic;font-weight:500}
 
-.tagline{
-  margin-top:14px;font-family:var(--display);
-  font-size:clamp(1.05rem,1.65vw,1.4rem);line-height:1.35;
-  color:var(--muted);font-style:italic;max-width:60ch;margin-inline:auto;
-}
 
 .authors{
-  margin-top:26px;font-size:17px;line-height:1.85;
+  margin-top:22px;font-size:17px;line-height:1.85;
   max-width:1140px;margin-inline:auto;
 }
 .authors .author{white-space:nowrap}

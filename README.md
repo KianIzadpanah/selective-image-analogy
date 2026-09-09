@@ -2,7 +2,7 @@
 
 Project page for **SIA: Selective Image Analogy**, SIGGRAPH Asia 2026.
 
-**Live site:** <https://kianizadpanah.github.io/selective-image-analogy/>
+**Live site:** <https://selective-image-analogy.github.io/>
 
 Amirhossein Alimohammadi\*, Kian Izadpanah\*, Bardiya Kariminia, Yiorgos Chrysanthou,
 Ali Mahdavi-Amiri — *\*equal contribution*
@@ -104,27 +104,47 @@ python -m http.server 8000
 
 ## Deployment
 
-Already live and wired up: **Settings → Pages → Source** is set to
-**GitHub Actions**, and `.github/workflows/pages.yml` runs on every push to
-`main`. Nothing to click — push and the site updates in about a minute.
+`.github/workflows/pages.yml` runs on every push to `main`; **Settings → Pages
+→ Source** must be **GitHub Actions**. The workflow deletes `new figures/` and
+`tools/` from the artifact before uploading, so the published site is ~9 MB
+rather than ~42 MB. Jekyll is off (`.nojekyll`), so paths starting with `_` and
+the `static/` tree are served verbatim.
 
-The workflow deletes `new figures/` and `tools/` from the artifact before
-uploading, so the published site is ~9 MB rather than ~42 MB. Jekyll is off
-(`.nojekyll`), so paths starting with `_` and the `static/` tree are served
-verbatim.
+### Moving to selective-image-analogy.github.io
 
-## Two things to confirm before announcing
+Every absolute URL in the page already points at that domain. Serving it there
+needs a GitHub **organization** of exactly that name, which can only be created
+in the web UI:
+
+1. <https://github.com/organizations/plan> → Free → name it
+   `selective-image-analogy`.
+2. In the new org, create a public repo called
+   `selective-image-analogy.github.io`.
+3. Push this repository to it, then set **Settings → Pages → Source** to
+   **GitHub Actions**.
+
+Because the repo name matches the org, GitHub serves it at the domain root, so
+the relative `static/...` paths keep working unchanged.
+
+## Loose ends
 
 1. **BibTeX track.** `index.html` cites the paper as
    `@inproceedings{... booktitle = {SIGGRAPH Asia 2026 Conference Papers} ...}`.
    If it was accepted to the journal (TOG) track instead, switch it to
    `@article` with `journal = {ACM Transactions on Graphics}` plus volume,
    number and DOI.
-2. **arXiv link.** The masthead has a ready-made arXiv button commented out
-   right above the *Code* button. Uncomment it and drop in the identifier once
-   the preprint is live.
+2. **arXiv and Code buttons** in the masthead are inert `<span class="btn
+   pending">` placeholders. Turn each back into an `<a href="...">` once the
+   preprint and the repo are public.
+3. **The paper PDF** is still at `static/pdfs/SIA_paper.pdf` but nothing links
+   to it. Add a button back to the masthead when it should be public.
+4. **Studio portrait** reads *combination n / 7* rather than 8 because
+   `all_is_correct/3` has no `no_supp.png`. Render that full transfer and the
+   build picks it up.
 
 ## Credit
 
-Page design adapted from the [Nerfies](https://nerfies.github.io) project page,
-licensed [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
+Layout and typography take their cue from the
+[Nerfies](https://nerfies.github.io) and
+[HairPort](https://deepmancer.github.io/HairPort/) project pages. Released
+under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).

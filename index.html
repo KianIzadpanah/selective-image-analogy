@@ -8,17 +8,17 @@
 <meta name="description" content="Selective Image Analogy (SIA): a single before/after demonstration pair encodes several edits, and the user picks at inference time which of them transfer to a new query image. SIGGRAPH Asia 2026.">
 <meta name="author" content="Amirhossein Alimohammadi, Kian Izadpanah, Bardiya Kariminia, Yiorgos Chrysanthou, Ali Mahdavi-Amiri">
 <meta name="keywords" content="image analogy, selective image analogy, image editing, diffusion models, LoRA, concept suppression, SIGGRAPH Asia 2026">
-<link rel="canonical" href="https://kianizadpanah.github.io/selective-image-analogy/">
+<link rel="canonical" href="https://selective-image-analogy.github.io/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="SIA: Selective Image Analogy">
 <meta property="og:description" content="One before/after pair. You choose which of its edits carry over. SIGGRAPH Asia 2026.">
-<meta property="og:url" content="https://kianizadpanah.github.io/selective-image-analogy/">
-<meta property="og:image" content="https://kianizadpanah.github.io/selective-image-analogy/static/figures/teaser.png">
+<meta property="og:url" content="https://selective-image-analogy.github.io/">
+<meta property="og:image" content="https://selective-image-analogy.github.io/static/figures/teaser.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SIA: Selective Image Analogy">
 <meta name="twitter:description" content="One before/after pair. You choose which of its edits carry over. SIGGRAPH Asia 2026.">
-<meta name="twitter:image" content="https://kianizadpanah.github.io/selective-image-analogy/static/figures/teaser.png">
+<meta name="twitter:image" content="https://selective-image-analogy.github.io/static/figures/teaser.png">
 
 <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="static/favicon.svg">
@@ -65,8 +65,6 @@
     <div class="venue">SIGGRAPH Asia 2026</div>
 
     <h1>SIA: <em>Selective Image Analogy</em></h1>
-    <p class="tagline">One before/after pair. You choose which of its edits carry over.</p>
-
     <div class="authors">
       <span class="author"><a href="https://alimohammadiamirhossein.github.io/" target="_blank" rel="noopener">Amirhossein Alimohammadi</a><sup>1<span class="eq">*</span></sup></span><span class="sep">,</span>
       <span class="author"><a href="https://kianizadpanah.github.io" target="_blank" rel="noopener">Kian Izadpanah</a><sup>1,2<span class="eq">*</span></sup></span><span class="sep">,</span>
@@ -106,7 +104,7 @@
   <div class="wrap">
     <figure class="fig fig-teaser">
       <button class="fig-shell" type="button" data-zoom="static/figures/teaser.png"
-              data-caption="Fig. 1 &mdash; Teaser of SIA." aria-label="Enlarge the teaser figure">
+              data-caption="Fig. 1" aria-label="Enlarge the teaser figure">
         <picture>
           <source srcset="static/figures/teaser.webp" type="image/webp">
           <img src="static/figures/teaser.png" width="2400" height="1570"
@@ -115,7 +113,6 @@
         <span class="zoomhint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="7"/><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"/></svg> Enlarge</span>
       </button>
       <figcaption>
-        <b>Teaser of SIA.</b>
         A single reference pair (<em>A</em>, <em>A&prime;</em>) may contain multiple edits at once. In this example
         the changes include adding a logo, changing the expression, and replacing the background. Given a new query
         image <em>B</em>, SIA lets the user choose which edits to transfer. The same demonstration can produce
