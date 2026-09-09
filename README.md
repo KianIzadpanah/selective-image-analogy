@@ -104,27 +104,33 @@ python -m http.server 8000
 
 ## Deployment
 
-`.github/workflows/pages.yml` runs on every push to `main`; **Settings → Pages
-→ Source** must be **GitHub Actions**. The workflow deletes `new figures/` and
-`tools/` from the artifact before uploading, so the published site is ~9 MB
-rather than ~42 MB. Jekyll is off (`.nojekyll`), so paths starting with `_` and
-the `static/` tree are served verbatim.
+The site is served from the organization repo
+[`selective-image-analogy/selective-image-analogy.github.io`](https://github.com/selective-image-analogy/selective-image-analogy.github.io),
+which GitHub publishes at the domain root — so the relative `static/...` paths
+work unchanged.
 
-### Moving to selective-image-analogy.github.io
+`.github/workflows/pages.yml` runs on every push to `main` (and can be run by
+hand from the Actions tab). **Settings -> Pages -> Source** is **GitHub
+Actions**. The workflow deletes `new figures/` and `tools/` from the artifact
+before uploading, so the published site is ~9 MB rather than ~42 MB. Jekyll is
+off (`.nojekyll`), so paths starting with `_` and the `static/` tree are served
+verbatim.
 
-Every absolute URL in the page already points at that domain. Serving it there
-needs a GitHub **organization** of exactly that name, which can only be created
-in the web UI:
+If Pages is ever re-enabled from a branch instead, it will publish the *whole*
+repository, sources included; flipping Source back to GitHub Actions and
+re-running the workflow fixes it.
 
-1. <https://github.com/organizations/plan> → Free → name it
-   `selective-image-analogy`.
-2. In the new org, create a public repo called
-   `selective-image-analogy.github.io`.
-3. Push this repository to it, then set **Settings → Pages → Source** to
-   **GitHub Actions**.
+### Remotes
 
-Because the repo name matches the org, GitHub serves it at the domain root, so
-the relative `static/...` paths keep working unchanged.
+```
+site    selective-image-analogy/selective-image-analogy.github.io   <- the live site
+origin  KianIzadpanah/selective-image-analogy                       <- the original repo
+```
+
+Push to `site` to publish. `origin` still serves an older copy of the page at
+`kianizadpanah.github.io/selective-image-analogy`; every canonical/OG URL in
+`index.html` points at the new domain, so search engines will settle on it, but
+the old page can be turned off in that repo's Pages settings whenever you like.
 
 ## Loose ends
 
